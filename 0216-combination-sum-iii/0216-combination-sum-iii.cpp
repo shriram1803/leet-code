@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> res;
-    void solve(vector<int> current, int curr_val, int curr_sz, int target, const int k) 
+    void solve(vector<int>& current, int curr_val, int curr_sz, int target, const int k) 
     {
         if(curr_sz == k) {
             if(target == 0) res.push_back(current);
