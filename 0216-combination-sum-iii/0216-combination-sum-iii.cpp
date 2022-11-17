@@ -10,7 +10,7 @@ public:
         for(int i = curr_val; i <= 9; ++i) {
             if(i > target) break;
             current.push_back(i);
-            solve(current, i + 1, curr_sz + 1,target - i, k);
+            solve(current, i + 1, curr_sz + 1, target - i, k);
             current.pop_back();
         } 
     }
