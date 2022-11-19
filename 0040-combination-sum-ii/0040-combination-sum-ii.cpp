@@ -5,12 +5,12 @@ public:
     void solve(vector<int>& v, int ind, int target, vector<int>& curr) {
         if(target < 0) return;
         if(target == 0) {
-            res.push_back(curr);
+            res.emplace_back(curr);
             return;
         }
         for(int i = ind; i < v.size(); ++i) {
             if(i != ind and i > 0 and v[i] == v[i - 1]) continue;
-            curr.push_back(v[i]);
+            curr.emplace_back(v[i]);
             solve(v, i + 1, target - v[i], curr);
             curr.pop_back();
         }
