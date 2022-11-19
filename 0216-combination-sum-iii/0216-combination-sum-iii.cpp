@@ -4,12 +4,12 @@ public:
     void solve(vector<int>& current, int curr_val, int curr_sz, int target, const int k) 
     {
         if(curr_sz == k) {
-            if(target == 0) res.push_back(current);
+            if(target == 0) res.emplace_back(current);
             return;
         }
         for(int i = curr_val; i <= 9; ++i) {
             if(i > target) break;
-            current.push_back(i);
+            current.emplace_back(i);
             solve(current, i + 1, curr_sz + 1, target - i, k);
             current.pop_back();
         } 
