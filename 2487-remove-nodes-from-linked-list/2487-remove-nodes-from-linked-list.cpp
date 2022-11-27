@@ -10,31 +10,18 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* curr, ListNode* pre){
-        if(!curr)
-            return pre;
-        ListNode *temp = curr->next;
-        curr->next = pre;
-        return reverse(temp, curr);
-    }
-    
-    ListNode* reverseList(ListNode* head) {
-        return reverse(head, nullptr);
-    }
     ListNode* removeNodes(ListNode* head) {
-        if(!head or !head->next) return head;
-        
-        ListNode* rev = reverseList(head);
-        head = rev;
-        
-        while(head) {
-            int val = head->val;
-            ListNode* t = head->next;
-            while(t and t->val < val) t = t->next;
-            head->next = t;
-            head = head->next;
+        vector<ListNode*> v;
+        ListNode* curr = head;
+        while(curr) {
+            while(v.size() and v.back()->val < curr->val) v.pop_back();
+            v.emplace_back(curr);
+            curr = curr->next;
         }
-        
-        return reverseList(rev);
+        for(int i = 1; i < v.size(); ++i) {
+            v[i - 1]->next = v[i];
+        }
+        v.back()->next = nullptr;
+        return v[0];
     }
 };
