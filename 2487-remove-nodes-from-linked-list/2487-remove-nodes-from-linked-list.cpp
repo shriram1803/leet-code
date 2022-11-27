@@ -11,17 +11,8 @@
 class Solution {
 public:
     ListNode* removeNodes(ListNode* head) {
-        vector<ListNode*> v;
-        ListNode* curr = head;
-        while(curr) {
-            while(v.size() and v.back()->val < curr->val) v.pop_back();
-            v.emplace_back(curr);
-            curr = curr->next;
-        }
-        for(int i = 1; i < v.size(); ++i) {
-            v[i - 1]->next = v[i];
-        }
-        v.back()->next = nullptr;
-        return v[0];
+        if(!head) return nullptr;
+        head->next = removeNodes(head->next);
+        return head->next and head->val < head->next->val ? head->next : head;
     }
 };
