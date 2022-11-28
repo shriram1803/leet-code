@@ -9,13 +9,13 @@ public:
         sort(even.begin(), even.end());
     }
     int numSpecialEquivGroups(vector<string>& words) {
-        map<pair<string, string>, int> m;
+        set<pair<string, string>> s;
         for(auto& word : words) {
             string odd = "";
             string even = "";
             fillEvenOdd(word, odd, even);
-            m[{odd, even}]++;
+            s.insert({odd, even});
         }
-        return m.size();
+        return s.size();
     }
 };
