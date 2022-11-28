@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool solve(string a, string b, const int n) {
+    bool solve(string& a, string& b, const int n) {
         for(int i = 0, cnt = 0; i < n; ++i) {
             if(a[i] != b[i]) cnt++;
             if(cnt > 2) return false;
