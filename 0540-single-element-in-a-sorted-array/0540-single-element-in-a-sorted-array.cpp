@@ -5,6 +5,6 @@ public:
         for(int i = 1; i < n; ++i) {
             nums[i] ^= nums[i - 1];
         }
-        return nums.back();
+        return nums[n - 1];
     }
 };
