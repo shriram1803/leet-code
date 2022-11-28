@@ -1,17 +1,16 @@
 class LUPrefix {
     vector<int> v;
-    int lg, N;
+    int lg;
 public:
     
     LUPrefix(int n) {
-        v.resize(n + 1);
+        v.resize(n + 2);
         lg = 0;
-        N = n;
     }
     
     void upload(int video) {
         v[video] = 1;
-        while(lg < N and v[lg + 1] == 1) 
+        while(v[lg + 1] == 1) 
                 lg++;
     }
     
