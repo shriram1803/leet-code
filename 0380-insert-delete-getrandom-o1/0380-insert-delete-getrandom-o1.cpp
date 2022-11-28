@@ -18,14 +18,12 @@ public:
     
     bool remove(int val) {
         if(m.find(val) == m.end()) return false;
-        v[m[val]] = v[n - 1];
-        m[v[n - 1]] = m[val];
+        int ind = m[val];
+        v[ind] = v[n - 1];
+        m[v.back()] = ind;
         v.pop_back();
         m.erase(val);
         --n;
-        // cout<<val<<"  ";
-        // for(auto x : v) cout<<x<<" ";
-        // cout<<endl;
         return true;
     }
     
