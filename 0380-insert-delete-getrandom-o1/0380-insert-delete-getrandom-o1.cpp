@@ -18,12 +18,10 @@ public:
     
     bool remove(int val) {
         if(m.find(val) == m.end()) return false;
-        int ind = m[val];
-        v[ind] = v[n - 1];
-        m[v.back()] = ind;
+        v[m[val]] = v[--n];
+        m[v.back()] = m[val];
         v.pop_back();
         m.erase(val);
-        --n;
         return true;
     }
     
