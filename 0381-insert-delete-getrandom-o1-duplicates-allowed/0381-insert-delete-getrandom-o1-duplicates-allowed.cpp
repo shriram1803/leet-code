@@ -1,6 +1,6 @@
 class RandomizedCollection {
 public:
-    map<int, set<int>> m;
+    unordered_map<int, unordered_set<int>> m;
     vector<int> v;
     int n;
     RandomizedCollection() {
@@ -28,10 +28,6 @@ public:
         int val_ind = *m[val].begin();
         v[val_ind] = v[--n];
         v.pop_back();
-        // cout<<val_ind<<endl;
-        // cout<<val<< " " <<val_ind <<"   ";
-        // for(auto va : m[val]) cout<<va<<" ";
-        // cout<<endl;
         
         int swappedVal = v[val_ind];
         m[swappedVal].erase(n);
