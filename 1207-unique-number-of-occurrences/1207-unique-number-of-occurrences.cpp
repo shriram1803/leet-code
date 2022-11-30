@@ -1,12 +1,11 @@
 class Solution {
 public:
     bool uniqueOccurrences(vector<int>& arr) {
-        unordered_map<int, int> freq;
-        for(int num : arr) freq[num]++;
-        unordered_set<int> s;
-        for(auto it : freq) {
-            if(s.count(it.second)) return false;
-            s.insert(it.second);
+        short freq[2001] = {0};
+        for(int num : arr) ++freq[num + 1000];
+        sort(freq, freq + 2001);
+        for(int i = 1; i < 2001; ++i) {
+            if(freq[i] and freq[i] == freq[i - 1]) return false;
         }
         return true;
     }
