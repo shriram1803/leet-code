@@ -14,7 +14,6 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         const int n = nums.size();
         vector<vector<int>> dp(n, vector<int>(n + 1, -1));
-        int val = solve(nums, 0, -1, 0, n, dp);
-        return val;
+        return solve(nums, 0, -1, 0, n, dp);
     }
 };
