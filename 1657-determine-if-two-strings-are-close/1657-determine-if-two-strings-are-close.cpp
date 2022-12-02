@@ -3,19 +3,18 @@ public:
     bool closeStrings(string word1, string word2) {
         if(word1.size() != word2.size()) return false;
         vector<int> freq1(26, 0), freq2(26, 0);
-        priority_queue<int> p, q;
-        for(auto ch : word1) freq1[ch - 'a']++;
-        for(auto ch : word2) freq2[ch - 'a']++;
+        unordered_map<int, int> m;
+        for(int i = 0; i < word1.size(); ++i) {
+            freq1[word1[i] - 'a']++;
+            freq2[word2[i] - 'a']++;
+        }
         for(int i = 0; i < 26; ++i) {
             if(freq1[i] == 0 and freq2[i] == 0) continue;
             if(freq1[i] == 0 or freq2[i] == 0) return false;
-            p.push(freq1[i]);
-            q.push(freq2[i]);
+            m[freq1[i]]++;
+            m[freq2[i]]--;
         }
-        while(!p.empty() or !q.empty()) {
-            if(p.empty() or q.empty() or p.top() != q.top()) return false;
-            p.pop(), q.pop();
-        } 
+        for(auto [val, cnt] : m) if(cnt != 0) return false;
         return true;
     }
 };
