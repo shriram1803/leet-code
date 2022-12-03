@@ -11,8 +11,7 @@ public:
             bucket[count].append(count, element);
         }
         for(int i = s.size(); i > 0; --i) {
-            if(bucket[i].size())
-                res += bucket[i];
+            res += bucket[i];
         }
         return res;
     }
