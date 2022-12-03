@@ -7,7 +7,7 @@ public:
         for(auto ch : s){
             m[ch]++;
         }
-        for(auto [element, count] : m){
+        for(auto &[element, count] : m){
             bucket[count].append(count, element);
         }
         for(int i = s.size(); i > 0; --i) {
