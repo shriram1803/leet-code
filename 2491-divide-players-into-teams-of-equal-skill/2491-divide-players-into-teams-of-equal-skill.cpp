@@ -12,18 +12,21 @@ public:
         
         unordered_map<int, int> m;
         
+        int cnt = 0;
         for(auto val : skill) {
             if(val >= score_per_team) return -1;
             if(m[val]) {
                 res += (val * (score_per_team - val));
                 m[val]--;
+                cnt--;
             } else {
                 m[score_per_team - val]++;
+                cnt++;
             }
             
         }
         
-        for(auto it : m) if(it.second > 0) return -1;
+        if(cnt != 0) return -1;
             
         return res;
     }
