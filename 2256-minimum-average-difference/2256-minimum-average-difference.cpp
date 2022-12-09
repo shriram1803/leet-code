@@ -3,23 +3,21 @@ public:
     int minimumAverageDifference(vector<int>& nums) {
         const int n = nums.size();
         int min_val = INT_MAX, min_ind = 0;
-        vector<long long> forward(n, 0), backward(n, 0);
         
-        for(long long i = 0, cumulative = 0; i < n; ++i) {
-            cumulative += nums[i];
-            forward[i] = cumulative / (i + 1);
-        }
-        
-        for(long long i = n - 1, cumulative = 0; i >= 0; --i) {
-            if(i < n - 1) backward[i] = cumulative / (n - (i + 1));
-            cumulative += nums[i];
-        }
+        long long total = accumulate(nums.begin(), nums.end(), (long long)0);
+        long long curr = 0;
+        long long forward, backward;
         
         for(int i = 0; i < n; ++i) {
-            if(abs(forward[i] - backward[i]) < min_val) {
-                min_val = abs(forward[i] - backward[i]);
+            curr += nums[i];
+            total -= nums[i];
+            forward = curr / (i + 1);
+            if(i != n - 1) backward = total / (n - i - 1);
+            if(abs(forward - backward) < min_val) {
+                min_val = abs(forward - backward);
                 min_ind = i;
             }
+            backward = 0; 
         }
         
         return min_ind;
