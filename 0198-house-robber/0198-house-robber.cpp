@@ -8,6 +8,6 @@ public:
             temp = max(pre, nums[i] + prev);
             prev = pre, pre = temp;
         }
-        return max(pre, prev);
+        return pre;
     }
 };
