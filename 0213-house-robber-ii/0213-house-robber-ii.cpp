@@ -1,13 +1,16 @@
 class Solution {
 public:
+    int solver(vector<int>& nums, int start, int end, const int n) {
+        int prev = 0, pre = 0;
+        for(int i = start; i <= end; ++i) {
+            int tmp = max(pre, nums[i] + prev);
+            prev = pre, pre = tmp;
+        }
+        return pre;
+    }
     int rob(vector<int>& nums) {
         int n = nums.size();
         if(n == 1) return nums[0];
-        vector<int> dp(n*2, 0);
-        dp[0] = nums[0], dp[1] = max(dp[0], nums[1]);
-        for(int i = 2; i < n*2; ++i) {
-            dp[i] = max(dp[(i - 1)], nums[i%n] + dp[(i - 2)]);
-        }
-        return dp[n*2 - 1] - dp[n - 1];
+        return max(solver(nums, 0, n - 2, n), solver(nums, 1, n - 1, n));
     }
 };
