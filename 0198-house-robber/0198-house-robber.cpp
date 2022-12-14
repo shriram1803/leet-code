@@ -4,10 +4,11 @@ public:
         int n = nums.size();
         if(n == 1) return nums[0];
         vector<int> dp(n);
-        dp[0] = nums[0], dp[1] = max(nums[1], dp[0]);
+        int prev = nums[0], pre = max(nums[1], nums[0]), temp;
         for(int i = 2; i < n; ++i) {
-            dp[i] = max(dp[i - 1], nums[i] + dp[i - 2]);
+            temp = max(pre, nums[i] + prev);
+            prev = pre, pre = temp;
         }
-        return max(dp[n - 1], dp[n - 2]);
+        return max(pre, prev);
     }
 };
