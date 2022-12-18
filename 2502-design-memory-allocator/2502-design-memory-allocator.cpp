@@ -2,7 +2,6 @@ class Allocator {
 public:
     vector<int> v;
     int N;
-    unordered_map<int, int> m;
     Allocator(int n) {
         N = n;
         v.assign(N, -1);
