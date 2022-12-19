@@ -8,8 +8,9 @@ public:
         for(int i = 1; i < n; ++i) {
             int start = intervals[i][0];
             int end = intervals[i][1];
-            if(res.back()[1] >= start) {
-                if(end > res.back()[1]) 
+            int back_end = res.back()[1];
+            if(back_end >= start) {
+                if(end > back_end) 
                     res.back()[1] = end;
             } else {
                 res.emplace_back(intervals[i]);
