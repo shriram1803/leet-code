@@ -5,7 +5,7 @@ public:
     {
         if(r < 0 or c < 0 or r >= m or c >= n or g[r][c] == -1) return 0;
         if(g[r][c] == 2) {
-            return cnt == total + 1 ? 1 : 0;
+            return cnt == total ? 1 : 0;
         }
         g[r][c] = -1;
         int res = 0;
@@ -31,6 +31,6 @@ public:
             }
         }
 
-        return dfs(grid, 0, m * n - 2 - obs_cnt, start.first, start.second, m, n);
+        return dfs(grid, 1, m * n - obs_cnt, start.first, start.second, m, n);
     }
 };
