@@ -18,24 +18,19 @@ public:
     }
     int uniquePathsIII(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size();
-        vector<vector<int>> dp(m, vector<int>(n, -1));
         int obs_cnt = 0;
+        pair<int, int> start = {-1, -1};
         for(int i = 0; i < m; ++i) {
             for(int j = 0; j < n; ++j) {
                 if(grid[i][j] == -1) {
                     ++obs_cnt;
-                }
-            }
-        }
-        
-        for(int i = 0; i < m; ++i) {
-            for(int j = 0; j < n; ++j) {
-                if(grid[i][j] == 1) {
-                    return dfs(grid, 0, m * n - 2 - obs_cnt, i, j, m, n);
+                } else if(grid[i][j] == 1) {
+                    start.first = i;
+                    start.second = j;
                 }
             }
         }
 
-        return -1;
+        return dfs(grid, 0, m * n - 2 - obs_cnt, start.first, start.second, m, n);
     }
 };
