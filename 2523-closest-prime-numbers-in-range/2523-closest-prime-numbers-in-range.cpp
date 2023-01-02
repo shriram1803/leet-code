@@ -26,6 +26,7 @@ public:
                         minn = i - prev;
                         res[0] = prev, res[1] = i;
                     }
+                    if(minn < 3) break;
                 }
                 prev = i;
             }
