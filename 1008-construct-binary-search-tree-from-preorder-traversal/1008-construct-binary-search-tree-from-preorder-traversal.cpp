@@ -11,26 +11,12 @@
  */
 class Solution {
 public:
-    void insert(TreeNode* curr, int val) {
-        if(val < curr->val) {
-            if(curr->left) {
-                insert(curr->left, val);
-            } else {
-                curr->left = new TreeNode(val);
-            }
-        } else {
-            if(curr->right) {
-                insert(curr->right, val);
-            } else {
-                curr->right = new TreeNode(val);
-            }
-        }
-    }
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        TreeNode* root = new TreeNode(preorder[0]);
-        for(int i = 1; i < preorder.size(); ++i) {
-            insert(root, preorder[i]);
-        }
+    int ind = 0;
+    TreeNode* bstFromPreorder(vector<int>& preorder, int val = 1001) {
+        if(ind >= preorder.size() or preorder[ind] > val) return nullptr;
+        TreeNode* root = new TreeNode(preorder[ind++]);
+        root->left = bstFromPreorder(preorder, root->val);
+        root->right = bstFromPreorder(preorder, val);
         return root;
     }
 };
