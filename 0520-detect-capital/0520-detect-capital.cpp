@@ -1,13 +1,13 @@
 class Solution {
 public:
-    bool a(string word) {
+    bool ifAllCapital(string word) {
         for(auto ch : word) {
             if(ch >= 97) 
                 return false;
         }
         return true;
     }
-    bool b(string word) {
+    bool ifAllSmall(string word) {
         int n = word.size();
         for(int i = 1; i < n; ++i) {
             if(word[i] < 97) 
@@ -16,6 +16,6 @@ public:
         return true;
     }
     bool detectCapitalUse(string word) {
-        return a(word) or b(word);
+        return ifAllCapital(word) or ifAllSmall(word);
     }
 };
