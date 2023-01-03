@@ -11,24 +11,18 @@
  */
 class BSTIterator {
 public:
-    TreeNode* node;
-    BSTIterator(TreeNode* root) {
+    TreeNode* node = new TreeNode();
+    void build(TreeNode* root) {
         if(!root) return;
-        stack<TreeNode*> s;
-        TreeNode* curr = root, *prev = new TreeNode();
-        node = prev;
-        while(curr or s.size()) {
-            if(curr) {
-                s.push(curr);
-                curr = curr->left;
-            } else {
-                prev->right = s.top();
-                prev = prev->right;
-                curr = s.top()->right;
-                s.pop();
-            }
-        }
+        build(root->left);
+        node->right = root;
         node = node->right;
+        build(root->right);
+    }
+    BSTIterator(TreeNode* root) {
+        TreeNode* store = node;
+        build(root);
+        node = store, node = node->right;
     }
     
     int next() {
