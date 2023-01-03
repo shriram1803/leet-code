@@ -15,9 +15,18 @@ public:
     vector<int> inorder;
     void build(TreeNode* root) {
         if(!root) return;
-        build(root->left);
-        inorder.emplace_back(root->val);
-        build(root->right);
+        stack<TreeNode*> s;
+        TreeNode* curr = root;
+        while(curr or s.size()) {
+            if(curr) {
+                s.push(curr);
+                curr = curr->left;
+            } else {
+                inorder.emplace_back(s.top()->val);
+                curr = s.top()->right;
+                s.pop();
+            }
+        }
     }
     BSTIterator(TreeNode* root) {
         build(root);
