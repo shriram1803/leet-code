@@ -1,13 +1,13 @@
 class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
-        int n = points.size(), res = n;
-        sort(points.begin(), points.end());
-        for(int i = 1; i < n; ++i) {
-            if(points[i][0] <= points[i - 1][1]) {
-                points[i][0] = max(points[i][0], points[i - 1][0]);
-                points[i][1] = min(points[i][1], points[i - 1][1]);
-                --res;
+        int n = points.size(), res = 0, end = 0;
+        auto cmp = [](vector<int>& a, vector<int>& b) { return a[1] < b[1]; };
+        sort(points.begin(), points.end(), cmp);
+        for(int i = 0; i < n; ++i) {
+            if(res == 0 or points[i][0] > end) {
+                ++res;
+                end = points[i][1];
             }
         }
         return res;
