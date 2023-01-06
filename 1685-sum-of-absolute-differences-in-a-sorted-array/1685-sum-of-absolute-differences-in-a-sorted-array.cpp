@@ -2,17 +2,13 @@ class Solution {
 public:
     vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
         int n = nums.size();
-        vector<int> res(n, 0);
-        int sum = 0;
+        int sum = 0, tot = accumulate(nums.begin(), nums.end(), 0);
         for(int i = 0; i < n; ++i) {
-            res[i] += (i * nums[i] - sum);
+            tot -= nums[i];
+            int val = (i * nums[i] - sum) + (tot - (n - i - 1) * nums[i]);
             sum += nums[i];
+            nums[i] = val;
         }
-        sum = 0;
-        for(int i = n - 1; i >= 0; --i) {
-            res[i] += (sum - (n - i - 1) * nums[i]);
-            sum += nums[i];
-        }
-        return res;
+        return nums;
     }
 };
