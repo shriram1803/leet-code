@@ -1,3 +1,4 @@
+vector<int> dirs{-1, 0, 1, 0, -1};
 class Solution {
 public:
     int dfs(int r, int c, int m, int n, vector<vector<int>>& grid) {
@@ -6,12 +7,16 @@ public:
         }
         if(grid[r][c] == 0) return 0;
         grid[r][c] = 0;
-        int a = dfs(r + 1, c, m, n, grid);
-        int b = dfs(r - 1, c, m, n, grid);
-        int cx = dfs(r, c + 1, m, n, grid);
-        int d = dfs(r, c - 1, m, n, grid);
-        if(a < 0 or b < 0 or cx < 0 or d < 0) return -1;
-        return 1 + a + b + cx + d;            
+        int res = 1;
+        for(int i = 0; i <= 3; ++i) {
+            int ret = dfs(r + dirs[i], c + dirs[i + 1], m, n, grid);
+            if(ret != -1 and res != -1) {
+                res += ret;
+            } else {
+                res = -1;
+            }
+        }
+        return res;          
     }
     int numEnclaves(vector<vector<int>>& grid) {
         int m = grid.size(), n = grid[0].size(), res = 0;
