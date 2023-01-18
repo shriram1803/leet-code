@@ -12,22 +12,16 @@ public:
             }
         }
         if(q.size() == m * n) return mat;
-        int level = 0;
         while(!q.empty()) {
-            int t = q.size();
-            while(t--) {
-                int x = q.front().first, y = q.front().second;
-                q.pop();
-                mat[x][y] = level;
-                for(int i = 0; i <= 3; ++i) {
-                    int xx = x + dirs[i], yy = y + dirs[i + 1];                    
-                    if(xx < 0 or yy < 0 or xx >= m or yy >= n or vis[xx][yy]) 
-                        continue;
-                    vis[xx][yy] = 1;
-                    q.push({xx, yy});
-                }
-            }
-            ++level;        
+            int x = q.front().first, y = q.front().second;
+            q.pop();
+            for(int i = 0; i <= 3; ++i) {
+                int xx = x + dirs[i], yy = y + dirs[i + 1];                    
+                if(xx < 0 or yy < 0 or xx >= m or yy >= n or vis[xx][yy]) 
+                    continue;
+                mat[xx][yy] = mat[x][y] + 1, vis[xx][yy] = 1;
+                q.push({xx, yy});
+            }        
         }
         return mat;
     }
