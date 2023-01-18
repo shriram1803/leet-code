@@ -19,11 +19,10 @@ public:
         return res;
     }
     int maxSubarraySumCircular(vector<int>& nums) {
-        long tot = accumulate(nums.begin(), nums.end(), (long)0);
-        long pos = kadane(nums), neg = negativekadane(nums);
-        long val = tot - neg;
-        if(val == 0) val = INT_MIN;
-        long res = max(pos, val);
-        return res;
+        int tot = accumulate(nums.begin(), nums.end(), 0);
+        int pos = kadane(nums), neg = negativekadane(nums);
+        int val = tot - neg;
+        if(val == 0) return pos;
+        return max(pos, val);
     }
 };
