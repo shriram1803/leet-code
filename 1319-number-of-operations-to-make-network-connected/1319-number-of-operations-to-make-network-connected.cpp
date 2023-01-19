@@ -1,9 +1,7 @@
 class Solution {
 public:
-    int cycles = 0;
     void dfs(vector<vector<int>>& adj, vector<int>& vis, vector<int>& path, int node, int prev) {
         if(path[node]) {
-            ++cycles;
             return;
         } 
         if(vis[node]) return;
@@ -17,6 +15,8 @@ public:
         path[node] = 0;
     }
     int makeConnected(int n, vector<vector<int>>& connections) {
+        if(connections.size() < n - 1) 
+            return -1;
         vector<vector<int>> adj(n);
         vector<int> vis(n, 0), path(n, 0);
         int comps = 0;
@@ -30,7 +30,6 @@ public:
                 dfs(adj, vis, path, i, -1);
             }
         }
-        if(cycles >= comps - 1) return comps - 1;
-        return -1;
+        return comps - 1;
     }
 };
