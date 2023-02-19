@@ -20,17 +20,16 @@ public:
         int lvl = 1;
         while(!q.empty()){
             int t = q.size();
-            vector<int> v;
+            res.push_back({});
             while(t--){
                 TreeNode* temp = q.front();
                 q.pop();
-                v.push_back(temp->val);
+                res.back().push_back(temp->val);
                 if(temp->left) q.push(temp->left);
                 if(temp->right) q.push(temp->right);
             }
             if(lvl % 2 == 0)
-                reverse(v.begin(), v.end());
-            res.push_back(v);
+                reverse(res.back().begin(), res.back().end());
             lvl++;
         }
         return res;
