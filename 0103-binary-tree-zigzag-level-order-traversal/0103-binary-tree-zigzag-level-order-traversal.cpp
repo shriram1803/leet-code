@@ -24,11 +24,12 @@ public:
             while(t--){
                 TreeNode* temp = q.front();
                 q.pop();
-                if(lvl % 2 == 0) v.insert(v.begin(), temp->val);
-                else v.push_back(temp->val);
+                v.push_back(temp->val);
                 if(temp->left) q.push(temp->left);
                 if(temp->right) q.push(temp->right);
             }
+            if(lvl % 2 == 0)
+                reverse(v.begin(), v.end());
             res.push_back(v);
             lvl++;
         }
