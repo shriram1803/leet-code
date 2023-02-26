@@ -20,7 +20,10 @@ public:
         
         long long curr_diff = curr - target;
         
-        int exists = diffs[curr_diff];
+        int exists = 0;
+        
+        if(diffs.count(curr_diff))
+            exists = diffs[curr_diff];
 
         diffs[curr] += 1;
 
