@@ -6,19 +6,19 @@ public:
         
         int i, j, ind, mid = (start + end) / 2;
         
-        for(i = start, j = mid + 1, ind = 0; i <= mid or j <= end;) {
-            if(i <= mid and j <= end) {
-                if(nums[i] < nums[j]) {
-                    temp[ind] = nums[i], ++i;
-                } else {
-                    temp[ind] = nums[j], ++j;
-                }
-            } else if(i <= mid) {
+        for(i = start, j = mid + 1, ind = 0; i <= mid and j <= end;) {
+            if(nums[i] < nums[j]) {
                 temp[ind] = nums[i], ++i;
             } else {
                 temp[ind] = nums[j], ++j;
             }
             ++ind;
+        }
+        while(i <= mid) {
+            temp[ind] = nums[i], ++i, ++ind;
+        }
+        while(j <= end) {
+            temp[ind] = nums[j], ++j, ++ind;
         }
         
         for(int i = 0, j = start; i < ind; ++i, ++j) {
