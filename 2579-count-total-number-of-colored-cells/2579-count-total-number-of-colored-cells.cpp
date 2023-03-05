@@ -2,22 +2,11 @@ class Solution {
 public:
     long long coloredCells(int n) {
         
-        long long res = 0;
+        long long start = 1, diff = 2;
         
-        int curr = 2 * n - 1;
+        long long res = (n * (2 * start + (n - 1) * diff)) / 2;
         
-        res += curr;
-        
-        while(1) {
-            
-            curr -= 2;
-            
-            if(curr <= 0) 
-                break;
-            
-            res += 2 * curr;
-            
-        }
+        res = (res * 2) - (2 * n - 1);
         
         return res;
         
