@@ -11,9 +11,7 @@
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
-        ListNode* ret = new ListNode();
         ListNode* slow = head, * fast = head->next;
-        ret->next = head;
         while(fast) {
             while(fast and fast->val != 0) {
                 slow->val += fast->val;
@@ -24,11 +22,10 @@ public:
                 fast = fast->next;
             else {
                 slow->next = nullptr;
-                return ret->next;
+                break;
             }
             slow = slow->next;
         }
-        slow->next = nullptr;
-        return ret->next;
+        return head;
     }
 };
