@@ -16,17 +16,20 @@ public:
         };
         priority_queue<ListNode*, vector<ListNode*>, decltype(comp)> pq(comp);
         for(auto head : lists) {
-            while(head) {
+            if(head) {
                 pq.push(head);
-                head = head->next;
             }
         }
         ListNode* ret = new ListNode();
         ListNode* curr = ret;
         while(!pq.empty()) {
             curr->next = pq.top();
-            curr = curr->next, curr->next = nullptr;
             pq.pop();
+            curr = curr->next;
+            if(curr->next) {
+                pq.push(curr->next);
+                curr->next = nullptr;
+            }
         }
         return ret->next;
     }
