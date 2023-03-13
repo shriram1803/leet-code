@@ -16,9 +16,7 @@ public:
             return true;
         if(!a or !b)
             return false;
-        if(a->val != b->val)
-            return false;
-        return compare(a->left, b->right) and compare(a->right, b->left);
+        return a->val == b->val and compare(a->left, b->right) and compare(a->right, b->left);
     }
     bool isSymmetric(TreeNode* root) {
         return compare(root->left, root->right);
