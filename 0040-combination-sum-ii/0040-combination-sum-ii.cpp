@@ -16,7 +16,7 @@ public:
         
         ind += 1;
         
-        while(ind > 0 and ind < v.size() and v[ind - 1] == v[ind]) ind += 1;
+        while(ind < v.size() and v[ind - 1] == v[ind]) ind += 1;
         
         solve(v, ind, target, curr);
     }
