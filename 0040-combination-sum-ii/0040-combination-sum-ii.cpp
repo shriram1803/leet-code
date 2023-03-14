@@ -3,17 +3,22 @@ public:
     vector<vector<int>> res;
     
     void solve(vector<int>& v, int ind, int target, vector<int>& curr) {
-        if(target < 0) return;
         if(target == 0) {
             res.emplace_back(curr);
             return;
         }
-        for(int i = ind; i < v.size(); ++i) {
-            if(i != ind and i > 0 and v[i] == v[i - 1]) continue;
-            curr.emplace_back(v[i]);
-            solve(v, i + 1, target - v[i], curr);
-            curr.pop_back();
-        }
+        
+        if(target < 0 or ind >= v.size()) return;
+        
+        curr.emplace_back(v[ind]);
+        solve(v, ind + 1, target - v[ind], curr);
+        curr.pop_back();
+        
+        ind += 1;
+        
+        while(ind > 0 and ind < v.size() and v[ind - 1] == v[ind]) ind += 1;
+        
+        solve(v, ind, target, curr);
     }
     
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
