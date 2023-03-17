@@ -23,10 +23,9 @@ public:
     
     void insert(string word) {
         Node* curr = root;
-        for(char ch : word) {
-            Node* newNode = new Node(ch);
+        for(char& ch : word) {
             if(!curr->children.count(ch))
-                curr->children[ch] = newNode;
+                curr->children[ch] = new Node(ch);
             curr = curr->children[ch];
         }
         curr->isEnd = true;
@@ -34,7 +33,7 @@ public:
     
     bool search(string word) {
         Node* curr = root;
-        for(char ch : word) {
+        for(char& ch : word) {
             if(!curr->children.count(ch))
                 return false;
             curr = curr->children[ch];
@@ -44,7 +43,7 @@ public:
     
     bool startsWith(string prefix) {
         Node* curr = root;
-        for(char ch : prefix) {
+        for(char& ch : prefix) {
             if(!curr->children.count(ch))
                 return false;
             curr = curr->children[ch];
