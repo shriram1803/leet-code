@@ -1,12 +1,12 @@
 class Node {
     public:
         string url;
-        Node* next, * prev;
+        Node * next, * prev;
     public:
         Node(string url) {
             this->url = url;
-            next = nullptr;
-            prev = nullptr;
+            this->next = nullptr;
+            this->prev = nullptr;
         }
 };
 class BrowserHistory {
