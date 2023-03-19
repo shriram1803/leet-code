@@ -7,10 +7,11 @@ public:
         int n = grid.size();
         int x = 0, y = 0, curr = 0;
         int visited = 1;
+        int nextX, nextY;
         while(visited < n * n) {
             bool found = false;
             for(int i = 0; i < 8; ++i) {
-                int nextX = x + moves[i][0], nextY = y + moves[i][1];
+                nextX = x + moves[i][0], nextY = y + moves[i][1];
                 if(nextX < 0 or nextY < 0 or nextX >= n or nextY >= n) 
                     continue;
                 if(grid[nextX][nextY] == curr + 1) {
