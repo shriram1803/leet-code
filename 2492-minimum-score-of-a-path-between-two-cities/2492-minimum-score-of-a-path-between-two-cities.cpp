@@ -3,12 +3,12 @@ public:
     int res = INT_MAX;
     
     void solve(int n, vector<vector<pair<int, int>>>& m, vector<int>& v, int curr) {
-        if(curr == n or v[curr] > 0) return;
+        if(v[curr] > 0) return;
         v[curr]++;
         for(auto &[val, cos] : m[curr]) {
             res = min(res, cos);
             solve(n, m, v, val);           
-        }        
+        }      
     }
     
     int minScore(int n, vector<vector<int>>& roads) {
