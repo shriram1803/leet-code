@@ -1,15 +1,16 @@
 class Solution {
 public:
-    int maxSatisfaction(vector<int>& v) {
-        sort(v.begin(), v.end());
-        int n = v.size(), res = INT_MIN;
-        for(int i = 0; i < n; ++i) {
-            int curr = 0;
-            for(int j = i, num = 1; j < n; ++j, ++num) {
-                curr += v[j]*num;
-            }
-            res = max(res, curr);
+    int maxSatisfaction(vector<int>& s) {
+        int curr_sum = 0;
+        int curr_sat = 0;
+        int res = 0;
+        int n = s.size();
+        sort(s.begin(), s.end());
+        for(int i = n - 1; i >= 0; --i) {
+            curr_sum += s[i];
+            curr_sat += curr_sum;
+            res = max(res, curr_sat);
         }
-        return res > 0 ? res : 0;
+        return res;        
     }
 };
