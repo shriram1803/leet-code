@@ -2,9 +2,8 @@ class Solution {
 public:
     int numRescueBoats(vector<int>& p, int limit) {
         sort(p.begin(), p.end());
-        int n = p.size();
         int boats = 0;
-        int front = 0, back = n - 1;
+        int front = 0, back = p.size() - 1;
         while(front < back) {
             if(p[front] + p[back] <= limit) {
                 boats += 1;
@@ -13,6 +12,6 @@ public:
                 back -= 1;
             }
         }
-        return boats + (n - boats * 2);
+        return p.size() - boats;
     }
 };
