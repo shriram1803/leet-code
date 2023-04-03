@@ -2,7 +2,7 @@ class Solution {
 public:
     int numRescueBoats(vector<int>& p, int limit) {
         int n = p.size();
-        int boats = 0, picked = 0;
+        int boats = 0;
         sort(p.begin(), p.end());
         for(int i = 0, j = n - 1; i < j; ) {
             if(p[i] + p[j] <= limit) {
