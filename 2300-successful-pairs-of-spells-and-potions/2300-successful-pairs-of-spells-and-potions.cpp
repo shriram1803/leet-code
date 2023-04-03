@@ -1,17 +1,20 @@
 class Solution {
 public:
     vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
-        set<int> s(spells.begin(), spells.end());
-        unordered_map<int, int> resTable;
-        sort(potions.begin(), potions.end(), greater<int>());
-        int ind = 0, n = potions.size();
-        for(auto& it : s) {
-            while(ind < n and potions[ind] * (long long)it >= success)
-                ind += 1;
-            resTable[it] = ind;
-        }
-        for(int i = 0; i < spells.size(); ++i) {
-            spells[i] = resTable[spells[i]];
+        sort(potions.begin(), potions.end());
+        int left, right, mid, best;
+        for(int i = 0, n = potions.size(); i < spells.size(); ++i) {
+            left = 0, right = n - 1, best = n;
+            while(left <= right) {
+                mid = left + (right - left) / 2;
+                if(potions[mid] * (long long)spells[i] >= success) {
+                    right = mid - 1;
+                    best = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            spells[i] = n - best;
         }
         return spells;
     }
