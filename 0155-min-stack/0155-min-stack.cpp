@@ -1,30 +1,29 @@
 class MinStack {
 public:
-    map<int, vector<int>> mp;
-    int last;
+    vector<pair<int, int>> stack;
     MinStack() {
         
     }
     
     void push(int val) {
-        mp[val].emplace_back(last);
-        last = val;
+        int prev = INT_MAX;
+        if(stack.size())
+            prev = stack.back().second;
+        stack.push_back({val, val});
+        stack.back().second = min(stack.back().second, prev);
     }
     
     void pop() {
-        int prev = mp[last].back();
-        mp[last].pop_back();
-        if(!mp[last].size())
-            mp.erase(last);
-        last = prev;
+        stack.pop_back();
     }
     
+    
     int top() {
-        return last;
+        return stack.back().first;
     }
     
     int getMin() {
-        return (*mp.begin()).first;
+        return stack.back().second;
     }
 };
 
