@@ -1,12 +1,10 @@
 class Solution {
 public:
-    int point(vector<int>& nums, int ind, int col) {
-        int match = 0;
+    void handle(vector<int>& nums, int& curr, int ind, int col, int op) {
         if(ind > 0 and nums[ind - 1] == col)
-            match += 1;
+            curr += op;
         if(ind < nums.size() - 1 and nums[ind + 1] == col)
-            match += 1;
-        return match;
+            curr += op;
     }
     vector<int> colorTheArray(int n, vector<vector<int>>& queries) {
         vector<int> res(queries.size()), nums(n, 0);
@@ -14,10 +12,9 @@ public:
         for(int i = 0; i < queries.size(); ++i) {
             int ind = queries[i][0], col = queries[i][1];
             if(nums[ind] != 0)
-                curr -= point(nums, ind, nums[ind]);
+                handle(nums, curr, ind, nums[ind], -1);
             nums[ind] = col;
-            curr += point(nums, ind, col);
-            
+            handle(nums, curr, ind, col, 1);            
             res[i] = curr;
         }
         return res;
