@@ -9,7 +9,7 @@ public:
         return match;
     }
     vector<int> colorTheArray(int n, vector<vector<int>>& queries) {
-        vector<int> res(queries.size()), points(n, 0), nums(n, 0);
+        vector<int> res(queries.size()), nums(n, 0);
         int curr = 0;
         for(int i = 0; i < queries.size(); ++i) {
             int ind = queries[i][0], col = queries[i][1];
