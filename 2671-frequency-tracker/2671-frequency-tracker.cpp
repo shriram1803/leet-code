@@ -1,26 +1,24 @@
 class FrequencyTracker {
 public:
-    int fq[100001] = {0}, numfq[100001] = {0};
+    int fq[100001] = {}, numfq[100001] = {};
     FrequencyTracker() {
         
     }
     
     void add(int number) {
-        fq[number] += 1;
-        numfq[fq[number]] += 1;
-        numfq[fq[number] - 1] -= 1; 
+        numfq[fq[number]] -= 1;
+        numfq[++fq[number]] += 1;
     }
     
     void deleteOne(int number) {
-        if(fq[number] > 0) {
+        if(fq[number]) {
             numfq[fq[number]] -= 1;
-            numfq[fq[number] - 1] += 1;
-            fq[number] -= 1;
+            numfq[--fq[number]] += 1;
         }
     }
     
     bool hasFrequency(int frequency) {
-        return numfq[frequency] > 0;
+        return numfq[frequency];
     }
 };
 
