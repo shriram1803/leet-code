@@ -6,14 +6,14 @@ public:
     }
     
     void add(int number) {
-        numfq[fq[number]] -= 1;
-        numfq[++fq[number]] += 1;
+        --numfq[fq[number]];
+        ++numfq[++fq[number]];
     }
     
     void deleteOne(int number) {
         if(fq[number]) {
-            numfq[fq[number]] -= 1;
-            numfq[--fq[number]] += 1;
+            --numfq[fq[number]];
+            ++numfq[--fq[number]];
         }
     }
     
