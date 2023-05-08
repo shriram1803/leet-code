@@ -1,6 +1,6 @@
 class FrequencyTracker {
 public:
-    int fq[100001] = {}, numfq[100001] = {};
+    unordered_map<int, int> fq, numfq;
     FrequencyTracker() {
         
     }
