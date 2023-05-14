@@ -9,13 +9,17 @@
 
 class Solution {
 public:
-    long long bs(long long start, long long end) {
-        int mid = (start + end) / 2;
-        if(guess(mid) == 0) return mid;
-        if(guess(mid) == -1) return bs(start, mid - 1);
-        return bs(mid + 1, end);
-    }
     int guessNumber(int n) {
-        return bs(0, n);
+        int mid, left = 0, right = n;
+        while(left <= right) {
+            mid = left + (right - left) / 2;
+            if(guess(mid) == 1)
+                left = mid + 1;
+            else if(guess(mid) == -1)
+                right = mid - 1;
+            else 
+                return mid;
+        }
+        return mid;
     }
 };
