@@ -19,9 +19,7 @@ public:
         while(fast->next) {
             fast = fast->next, slow = slow->next;
         }
-        int val = slow->val;
-        slow->val = first->val;
-        first->val = val;
+        swap(slow->val, first->val);
         return head;
     }
 };
