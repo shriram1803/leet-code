@@ -13,11 +13,7 @@ class Solution {
         dp[0][2] = points[0][2];
         for(int i = 1; i < n; ++i) {
             for(int j = 0; j < 3; ++j) {
-                for(int k = 0; k < 3; ++k) {
-                    if(j != k) {
-                        dp[i][j] = max(dp[i][j], points[i][j] + dp[i - 1][k]);
-                    }
-                }
+                dp[i][j] = max(points[i][j] + dp[i - 1][(j + 1)%3], points[i][j] + dp[i - 1][(j + 2)%3]);
             }
         }
         return max(dp[n - 1][0], max(dp[n - 1][1], dp[n - 1][2]));
