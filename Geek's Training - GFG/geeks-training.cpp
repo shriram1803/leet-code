@@ -7,16 +7,22 @@ class Solution {
   public:
     int maximumPoints(vector<vector<int>>& points, int n) {
         // Code here
-        vector<vector<int>> dp(n, vector<int>(3, -1));
-        dp[0][0] = points[0][0];
-        dp[0][1] = points[0][1];
-        dp[0][2] = points[0][2];
-        for(int i = 1; i < n; ++i) {
-            for(int j = 0; j < 3; ++j) {
-                dp[i][j] = max(points[i][j] + dp[i - 1][(j + 1)%3], points[i][j] + dp[i - 1][(j + 2)%3]);
+        vector<int> prev(4), curr(4);
+        prev[0] = max(points[0][1], points[0][2]);
+        prev[1] = max(points[0][0], points[0][2]);
+        prev[2] = max(points[0][0], points[0][1]);
+        prev[3] = max(points[0][0], max(points[0][1], points[0][2]));
+        for(int day = 1; day < n; ++day) {
+            for(int last = 0; last < 4; ++last) {
+                for(int task = 0; task < 3; ++task) {
+                    if (last != task) {
+                        curr[last] = max(curr[last], points[day][task] + prev[task]);
+                    }
+                }
             }
+            prev = curr;
         }
-        return max(dp[n - 1][0], max(dp[n - 1][1], dp[n - 1][2]));
+        return prev[3];
     }
 };
 
