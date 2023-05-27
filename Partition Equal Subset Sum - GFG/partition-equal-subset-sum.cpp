@@ -9,21 +9,6 @@ using namespace std;
 
 class Solution{
 public:
-int backtrack(int curr, int ind, int nums[], vector<vector<int>>& dp) {
-        if(ind == 0) {  
-            return curr == nums[ind];
-        }
-        if(curr < 0)
-            return 0;
-        
-        if(dp[ind][curr] != -1) 
-            return dp[ind][curr];
-        
-        int pick = backtrack(curr - nums[ind], ind - 1, nums, dp);
-        int not_pick = backtrack(curr, ind - 1, nums, dp);
-        
-        return dp[ind][curr] = pick | not_pick;
-    }
     int equalPartition(int N, int arr[])
     {
         // code here
@@ -32,8 +17,20 @@ int backtrack(int curr, int ind, int nums[], vector<vector<int>>& dp) {
         if(s % 2 == 1) 
             return 0;
         int target = s / 2;
-        vector<vector<int>> dp(N, vector<int>(target + 1, -1));
-        return backtrack(target, N - 1, arr, dp);
+        vector<vector<int>> dp(N, vector<int>(target + 1, 0));
+        dp[0][arr[0]] = 1;
+        
+        for(int i = 1; i < N; ++i) {
+            for(int j = 1; j <= target; ++j) {
+                int not_pick = dp[i - 1][j];
+                int pick = 0;
+                if(j >= arr[i])
+                    pick = dp[i - 1][j - arr[i]];
+                dp[i][j] = pick | not_pick;
+            }
+        }
+        
+        return dp[N - 1][target];
     }
 };
 
