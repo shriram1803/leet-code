@@ -9,20 +9,23 @@ using namespace std;
 
 class Solution{   
 public:
-    int f(int curr, int ind, int n, vector<int>& arr, vector<vector<int>>& dp) {
-        if(curr == 0) return 1;
-        if(curr < 0 or ind >= n) return 0;
-        if(dp[curr][ind] != -1) return dp[curr][ind]; 
-        for(int i = ind; i < n; ++i) {
-            if(f(curr - arr[i], i + 1, n, arr, dp))
-                return 1;
-        }
-        return dp[curr][ind] = 0;
-    }
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
-        vector<vector<int>> dp(sum + 1, vector<int>(arr.size(), -1));
-        return f(sum, 0, arr.size(), arr, dp);
+        int n = arr.size();
+        vector<vector<int>> dp(n, vector<int>(sum + 1, 0));
+        for(int i = 0; i < n; ++i)
+            dp[i][0] = 1;
+        if(arr[0] <= sum)
+            dp[0][arr[0]] = 1;
+        for(int i = 1; i < n; ++i) {
+            for(int j = 1; j <= sum; ++j) {
+                int notpick = dp[i - 1][j];
+                int pick = false;
+                if(arr[i] <= j) pick = dp[i - 1][j - arr[i]];
+                dp[i][j] = pick || notpick;
+            }
+        }
+        return dp[n - 1][sum];
     }
 };
 
