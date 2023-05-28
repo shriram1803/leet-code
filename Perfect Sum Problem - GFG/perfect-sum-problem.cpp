@@ -28,11 +28,8 @@ class Solution{
         
         vector<vector<int>> dp(n, vector<int>(sum + 1, 0));
         
-        // if(arr[0] == 0) dp[0][0] += 1;
-        // if(arr[0] <= sum) dp[0][arr[0]] += 1;
-        if(arr[0] == 0) dp[0][0] = 2;
-        else dp[0][0] = 1;
-        if(arr[0] != 0 and arr[0] <= sum) dp[0][arr[0]] = 1;
+        dp[0][0] += 1;
+        if(arr[0] <= sum) dp[0][arr[0]] += 1;
         
         for(int i = 1; i < n; ++i) {
             for(int j = 0; j <= sum; ++j) {
