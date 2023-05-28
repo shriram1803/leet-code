@@ -24,7 +24,7 @@ class Solution{
 	    int res = INT_MAX;
 	    for(int i = 0; i <= s; ++i) {
 	        if(dp[n - 1][i] == 1) {
-	            res = min(res, abs(i - (s - i)));
+	            res = min(res, abs(2 * i - s));
 	        }
 	    }
 	    return res;
