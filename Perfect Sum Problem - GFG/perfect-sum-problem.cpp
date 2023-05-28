@@ -8,8 +8,8 @@ class Solution{
 	public:
 	const int mod = (int)(1e9 + 7);
 	int f(int rem, int ind, int arr[], vector<vector<int>>& dp) {
-	    if(ind < 0) {
-	        return rem == 0;
+	    if(ind == 0) {
+	        return (rem == 0) + (rem == arr[ind]);
 	    }
 	    
 	    if(dp[ind][rem] != -1) return dp[ind][rem];
