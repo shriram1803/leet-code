@@ -8,7 +8,6 @@ class Solution{
 	public:
 	const int mod = (int)(1e9 + 7);
 	int f(int rem, int ind, int arr[], vector<vector<int>>& dp) {
-	    if(rem < 0) return 0;
 	    if(ind < 0) {
 	        return rem == 0;
 	    }
@@ -16,7 +15,8 @@ class Solution{
 	    if(dp[ind][rem] != -1) return dp[ind][rem];
 	   
 	   int not_take = f(rem, ind - 1, arr, dp);
-	   int take = f(rem - arr[ind], ind - 1, arr, dp);
+	   int take = 0;
+	   if(rem >= arr[ind]) take += f(rem - arr[ind], ind - 1, arr, dp);
 	   
 	   return dp[ind][rem] = (take + not_take) % mod;
 	}
