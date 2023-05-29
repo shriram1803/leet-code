@@ -10,17 +10,14 @@ public:
             return dp[ind][amt];
         
         int not_pick = 1e9;
-        int pick_stay = 1e9;
-        int pick_move = 1e9;
+        int pick = 1e9;
         if(amt >= coins[ind]) {
-            pick_stay = backtrack(ind, amt - coins[ind], coins, dp);
-            if(ind > 0)
-                pick_move = backtrack(ind - 1, amt - coins[ind], coins, dp);
+            pick = 1 + backtrack(ind, amt - coins[ind], coins, dp);
         }
         if(ind > 0)
             not_pick = backtrack(ind - 1, amt, coins, dp);
         
-        return dp[ind][amt] = min(not_pick, 1 + min(pick_stay, pick_move));
+        return dp[ind][amt] = min(not_pick, pick);
     }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
