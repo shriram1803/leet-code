@@ -28,25 +28,25 @@ class Solution
     //   vector<vector<int>> dp(n, vector<int>(W + 1, -1));
     //   return f(n - 1, W, wt, val, dp);
        
-       vector<vector<int>> dp(n, vector<int>(W + 1, 0));
+       vector<int> dp(W + 1, 0);
        
        for(int i = wt[0]; i <= W; ++i) {
-           dp[0][i] = val[0];
+           dp[i] = val[0];
        }
        
        for(int i = 1; i < n; ++i) {
-           for(int j = 0; j <= W; ++j) {
+           for(int j = W; j >= 0; --j) {
                
-               int not_take = dp[i - 1][j];
+               int not_take = dp[j];
                int take = 0;
                if(j >= wt[i]) 
-                    take += val[i] + dp[i - 1][j - wt[i]];
+                    take += val[i] + dp[j - wt[i]];
                     
-                dp[i][j] = max(take, not_take);
+                dp[j] = max(take, not_take);
            }
        }
        
-       return dp[n - 1][W];
+       return dp[W];
     }
 };
 
