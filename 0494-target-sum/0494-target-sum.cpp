@@ -1,21 +1,5 @@
 class Solution {
 public:
-    int backtrack(int ind, int targ, vector<int>& nums, vector<vector<int>>& dp) {
-        
-        if(ind == 0) {
-            return (targ == 0) + (targ == nums[0]);
-        }
-        
-        if(dp[ind][targ] != -1)
-            return dp[ind][targ];
-        
-        int not_pick = backtrack(ind - 1, targ, nums, dp);
-        int pick = 0;
-        if(targ >= nums[ind]) 
-            pick += backtrack(ind - 1, targ - nums[ind], nums, dp);
-        
-        return dp[ind][targ] = (pick + not_pick);
-    }
     int findTargetSumWays(vector<int>& nums, int target) {
         int total = accumulate(nums.begin(), nums.end(), 0), n = nums.size();
         
@@ -24,8 +8,22 @@ public:
         
         target = (total - target) / 2;
         
-        vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+        vector<vector<int>> dp(n, vector<int>(target + 1, 0));
         
-        return backtrack(n - 1, target, nums, dp);
+        dp[0][0] = 1;
+        if(target >= nums[0])
+            dp[0][nums[0]] += 1;
+        
+        for(int ind = 1; ind < n; ++ind) {
+            for(int targ = 0; targ <= target; ++targ) {
+                int not_pick = dp[ind - 1][targ];
+                int pick = 0;
+                if(targ >= nums[ind])
+                    pick += dp[ind - 1][targ - nums[ind]];
+                dp[ind][targ] = pick + not_pick;
+            }
+        }
+        
+        return dp[n - 1][target];
     }
 };
