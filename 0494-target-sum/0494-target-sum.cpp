@@ -8,22 +8,22 @@ public:
         
         target = (total - target) / 2;
         
-        vector<vector<int>> dp(n, vector<int>(target + 1, 0));
+        vector<int> dp(target + 1, 0);
         
-        dp[0][0] = 1;
+        dp[0] = 1;
         if(target >= nums[0])
-            dp[0][nums[0]] += 1;
+            dp[nums[0]] += 1;
         
         for(int ind = 1; ind < n; ++ind) {
-            for(int targ = 0; targ <= target; ++targ) {
-                int not_pick = dp[ind - 1][targ];
+            for(int targ = target; targ >= 0; --targ) {
+                int not_pick = dp[targ];
                 int pick = 0;
                 if(targ >= nums[ind])
-                    pick += dp[ind - 1][targ - nums[ind]];
-                dp[ind][targ] = pick + not_pick;
+                    pick += dp[targ - nums[ind]];
+                dp[targ] = pick + not_pick;
             }
         }
         
-        return dp[n - 1][target];
+        return dp[target];
     }
 };
