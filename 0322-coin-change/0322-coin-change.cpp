@@ -1,21 +1,19 @@
 class Solution {
 public:
     int backtrack(int ind, int amt, vector<int>& coins, vector<vector<int>>& dp) {        
-        if(amt == 0)
-            return 0;
-        if(ind == 0 and amt < coins[0]) 
+        if(ind == 0) {
+            if(amt % coins[0] == 0)
+                return amt / coins[0];
             return 1e9;
+        }
         
         if(dp[ind][amt] != -1) 
             return dp[ind][amt];
         
-        int not_pick = 1e9;
+        int not_pick = backtrack(ind - 1, amt, coins, dp);;
         int pick = 1e9;
-        if(amt >= coins[ind]) {
+        if(amt >= coins[ind])
             pick = 1 + backtrack(ind, amt - coins[ind], coins, dp);
-        }
-        if(ind > 0)
-            not_pick = backtrack(ind - 1, amt, coins, dp);
         
         return dp[ind][amt] = min(not_pick, pick);
     }
