@@ -1,7 +1,7 @@
 class Solution {
 public:
     string shortestCommonSupersequence(string text1, string text2) {
-        //Perform LIS
+        //Perform LCS
         int m = text1.size(), n = text2.size();
         vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
         
