@@ -20,16 +20,18 @@ public:
         
         while(m > 0 and n > 0) {
             if(text1[m - 1] == text2[n - 1]) {
-                res = text1[--m] + res, --n;
+                res += text1[--m], --n;
             } else {
                 if(dp[m - 1][n] > dp[m][n - 1]) 
-                    res = text1[--m] + res;
+                    res += text1[--m];
                 else
-                    res = text2[--n] + res;
+                    res += text2[--n];
             }
         }
-        while(m > 0) res = text1[--m] + res;
-        while(n > 0) res = text2[--n] + res;
+        while(m > 0) res += text1[--m];
+        while(n > 0) res += text2[--n];
+        
+        reverse(res.begin(), res.end());
         
         
         return res;
