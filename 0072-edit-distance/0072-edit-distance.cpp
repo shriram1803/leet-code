@@ -3,24 +3,25 @@ public:
     int minDistance(string word1, string word2) {
         int s1 = word1.size(), s2 = word2.size();
         
-        vector<vector<int>> dp(s1 + 1, vector<int>(s2 + 1, 0));
+        vector<int> prev(s2 + 1), curr(s2 + 1);
         
-        for(int i = 0; i <= s1; ++i) dp[i][0] = i;
-        for(int i = 0; i <= s2; ++i) dp[0][i] = i;
+        for(int i = 0; i <= s2; ++i) prev[i] = i;
         
         for(int m = 1; m <= s1; ++m) {
+            curr[0] = m;
             for(int n = 1; n <= s2; ++n) {
                 if(word1[m - 1] == word2[n - 1]) {
-                    dp[m][n] = dp[m - 1][n - 1];
+                    curr[n] = prev[n - 1];
                 } else {
-                    dp[m][n] = 1 + min({
-                        dp[m - 1][n], dp[m][n - 1], dp[m - 1][n - 1]
+                    curr[n] = 1 + min({
+                        prev[n], curr[n - 1], prev[n - 1]
                     });
                 }
             }
+            prev = curr;
         }
         
         
-        return dp[s1][s2];
+        return prev[s2];
     }
 };
