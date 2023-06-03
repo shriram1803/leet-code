@@ -21,15 +21,12 @@ public:
             return dp[m][n] = backtrack(m - 1, n - 1, s, p, dp);
         
         if(p[n - 1] == '*')
-            return dp[m][n] = backtrack(m - 1, n, s, p, dp) | backtrack(m, n - 1, s, p, dp);
+            return dp[m][n] = backtrack(m - 1, n, s, p, dp) || backtrack(m, n - 1, s, p, dp);
         
         return dp[m][n] = 0;
     }
     bool isMatch(string s, string p) {
         int m = s.size(), n = p.size();
-        
-        if(p.size() == 0)
-            p += "!";
         
         vector<vector<int>> dp(m + 1, vector<int>(n + 1, -1));
         
