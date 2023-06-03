@@ -1,20 +1,17 @@
 class Solution {
 public:
-    int backtrack(int ind, int n, bool canBuy, vector<int>& prices, vector<vector<int>>& dp) {
-        if(ind == n)
-            return 0;
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
         
-        if(dp[ind][canBuy] != -1)
-            return dp[ind][canBuy];
+        vector<vector<int>> dp(n + 1, vector<int>(2, 0));
         
-        if(canBuy) {
-            return dp[ind][canBuy] = max(backtrack(ind + 1, n, canBuy, prices, dp), -prices[ind] + backtrack(ind + 1, n, !canBuy, prices, dp));
+        dp[n][0] = dp[n][1] = 0;
+        
+        for(int ind = n - 1; ind >= 0; --ind) {
+            dp[ind][0] = max(dp[ind + 1][0], prices[ind] + dp[ind + 1][1]);
+            dp[ind][1] = max(dp[ind + 1][1], -prices[ind] + dp[ind + 1][0]);
         }
         
-        return dp[ind][canBuy] = max(backtrack(ind + 1, n, canBuy, prices, dp), prices[ind] + backtrack(ind + 1, n, !canBuy, prices, dp));
-    }
-    int maxProfit(vector<int>& prices) {
-        vector<vector<int>> dp(prices.size(), vector<int>(2, -1));
-        return backtrack(0, prices.size(), 1, prices, dp);
+        return dp[0][1];
     }
 };
