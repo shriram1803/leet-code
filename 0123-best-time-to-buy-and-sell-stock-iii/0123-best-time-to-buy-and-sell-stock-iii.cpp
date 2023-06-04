@@ -4,20 +4,18 @@ public:
         
         int n = prices.size();
         
-        const bool canBuy = 1;
-        
-        vector<vector<int>> prev(2, vector<int>(3, 0));
-        vector<vector<int>> curr(2, vector<int>(3, 0));
+        vector<int> dp(5, 0);
         
         for(int ind = n - 1; ind >= 0; --ind) {
-            for(int rem = 1; rem <= 2; ++rem) {
-                curr[canBuy][rem] = max(prev[canBuy][rem], -prices[ind] + prev[!canBuy][rem]);
-                
-                curr[!canBuy][rem] = max(prev[!canBuy][rem], prices[ind] + prev[canBuy][rem - 1]);
+            for(int tran = 0; tran <= 3; ++tran) {
+                if(tran % 2) {
+                    dp[tran] = max(dp[tran], prices[ind] + dp[tran + 1]);       
+                } else {
+                    dp[tran] = max(dp[tran], -prices[ind] + dp[tran + 1]);
+                }
             }
-            prev = curr;
         } 
         
-        return prev[1][2];
+        return dp[0];
     }
 };
