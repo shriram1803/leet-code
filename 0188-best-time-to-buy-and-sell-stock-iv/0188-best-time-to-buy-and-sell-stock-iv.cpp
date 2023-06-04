@@ -1,25 +1,22 @@
 class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
-        // Modified previous version
-        // Just changed loop count of inner loop to K
+        
         int n = prices.size();
         
-        const bool canBuy = 1;
-        
-        vector<vector<int>> prev(2, vector<int>(k + 1, 0));
-        vector<vector<int>> curr(2, vector<int>(k + 1, 0));
+        vector<vector<int>> dp(n + 1, vector<int>(2*k + 1, 0));
         
         for(int ind = n - 1; ind >= 0; --ind) {
-            for(int rem = 1; rem <= k; ++rem) {
-                curr[canBuy][rem] = max(prev[canBuy][rem], -prices[ind] + prev[!canBuy][rem]);
-                
-                curr[!canBuy][rem] = max(prev[!canBuy][rem], prices[ind] + prev[canBuy][rem - 1]);
+            for(int tran = 2*k - 1; tran >= 0; --tran) {
+                if(tran % 2) {
+                    dp[ind][tran] = max(dp[ind + 1][tran], prices[ind] + dp[ind + 1][tran + 1]);                
+                } else {
+                    dp[ind][tran] = max(dp[ind + 1][tran], -prices[ind] + dp[ind + 1][tran + 1]);
+                }
             }
-            prev = curr;
         } 
         
-        return prev[1][k];
+        return dp[0][0];
         
     }
 };
