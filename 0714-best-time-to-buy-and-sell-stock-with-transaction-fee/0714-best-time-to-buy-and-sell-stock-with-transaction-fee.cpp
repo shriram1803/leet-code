@@ -5,15 +5,17 @@ public:
         
         const bool canBuy = 1, cannotBuy = 0;
         
-        vector<vector<int>> dp(n + 1, vector<int>(2, 0));
+        vector<int> prev(2, 0), curr(2, 0);
         
         for(int ind = n - 1; ind >= 0; --ind) {
-            dp[ind][canBuy] = max(dp[ind + 1][canBuy], -prices[ind] +  dp[ind + 1][cannotBuy]);
+            curr[canBuy] = max(prev[canBuy], -prices[ind] +  prev[cannotBuy]);
             
             // Similar to Stock II - Just subtracted the transaction fee 
-            dp[ind][cannotBuy] = max(dp[ind + 1][cannotBuy], prices[ind] - fee +  dp[ind + 1][canBuy]);
+            curr[cannotBuy] = max(prev[cannotBuy], prices[ind] - fee +  prev[canBuy]);
+            
+            prev = curr;
         }
         
-        return dp[0][1];
+        return prev[1];
     }
 };
