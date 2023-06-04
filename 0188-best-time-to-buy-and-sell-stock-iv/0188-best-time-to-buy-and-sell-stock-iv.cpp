@@ -4,20 +4,19 @@ public:
         
         int n = prices.size();
         
-        vector<int> prev(2*k + 1, 0), curr(2*k + 1, 0);
+        vector<int> dp(2*k + 1, 0);
         
         for(int ind = n - 1; ind >= 0; --ind) {
-            for(int tran = 2*k - 1; tran >= 0; --tran) {
+            for(int tran = 0; tran < 2*k; ++tran) {
                 if(tran % 2) {
-                    curr[tran] = max(prev[tran], prices[ind] + prev[tran + 1]);                
+                    dp[tran] = max(dp[tran], prices[ind] + dp[tran + 1]);       
                 } else {
-                    curr[tran] = max(prev[tran], -prices[ind] + prev[tran + 1]);
+                    dp[tran] = max(dp[tran], -prices[ind] + dp[tran + 1]);
                 }
             }
-            prev = curr;
         } 
         
-        return prev[0];
+        return dp[0];
         
     }
 };
