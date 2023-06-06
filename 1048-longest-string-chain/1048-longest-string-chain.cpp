@@ -11,7 +11,7 @@ public:
                 ++first;
             }
         }
-        return first == big.size() and second == small.size();
+        return second == small.size();
     }
     static bool comp(const string& s1, const string& s2) {
         return s1.size() < s2.size();
