@@ -1,20 +1,23 @@
 class Solution {
 public:
-    int backtrack(int front, int back, string& s, vector<vector<int>>& dp) {
-        if(front >= back) 
-            return front == back;
-        
-        if(dp[front][back] != -1) 
-            return dp[front][back];
-        
-        if(s[front] == s[back])
-            return dp[front][back] = 2 + backtrack(front + 1, back - 1, s, dp);
-        
-        return dp[front][back] = max(backtrack(front + 1, back, s, dp), backtrack(front, back - 1, s, dp));
-    }
     int longestPalindromeSubseq(string s) {
+        
         int n = s.size();
-        vector<vector<int>> dp(n, vector<int>(n, -1));
-        return backtrack(0, n - 1, s, dp);
+        vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+        
+        for(int i = 0; i < n; ++i) dp[i][i] = 1;
+        
+        for(int front = n - 1; front >= 0; --front) {
+            for(int back = front + 1; back < n; ++back) {
+                if(s[front] == s[back]) {
+                    dp[front][back] = 2 + dp[front + 1][back - 1];
+                } else {
+                    dp[front][back] = max(dp[front + 1][back], dp[front][back - 1]);
+                }
+            }
+        }
+        
+        
+        return dp[0][n - 1];
     }
 };
