@@ -18,16 +18,11 @@ public:
         
         for(int front = N - 2; front > 0; --front) {
             for(int back = front; back < N - 1; ++back) {
-                int res = 1e9;
                 for(int k = front; k <= back; ++k) {
-                    res = min(res, 
-                      cuts[back + 1] - 
-                      cuts[front - 1] + 
-                      dp[front][k - 1] + 
-                      dp[k + 1][back]
-                     );
+                    dp[front][back] = min(dp[front][back], 
+                                          cuts[back + 1] - cuts[front - 1] 
+                                          + dp[front][k - 1] + dp[k + 1][back]);
                 }
-                dp[front][back] = res;
             }
         }
         
