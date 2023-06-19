@@ -7,7 +7,7 @@ public:
         
         for(int ind = n - 1; ind >= 0; --ind) {
             int maxi = -1;        
-            for(int j = ind; j < n and j < ind + k; ++j) {
+            for(int j = ind; j < min(ind + k, n); ++j) {
                 maxi = max(maxi, arr[j]);
                 dp[ind] = max(dp[ind], maxi*(j - ind + 1) + dp[j + 1]);
             }
