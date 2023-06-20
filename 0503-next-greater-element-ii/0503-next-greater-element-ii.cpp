@@ -1,17 +1,22 @@
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
+        stack<int> s;
+        unordered_map<int, int> m;
         int n = nums.size();
-        vector<int> s, res(n, -1);
-        
-        for(int i = 0; i < 2 * n; ++i) {
-            while(s.size() and nums[s.back()] < nums[i % n]) {
-                res[s.back()] = nums[i % n];
-                s.pop_back();
+        for(int i = 0; i < 2*n; ++i) {
+            while(!s.empty() and nums[s.top() % n] < nums[i % n]) {
+                m[s.top() % n] = nums[i % n];
+                s.pop();
             }
-            s.emplace_back(i % n);
+            s.push(i);
         }
-
-        return res;
+        for(int i = 0; i < n; ++i) {
+            if(m.count(i))
+                nums[i] = m[i];
+            else 
+                nums[i] = -1;
+        }
+        return nums;
     }
 };
