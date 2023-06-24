@@ -1,8 +1,6 @@
 class Solution {
 public:
-    void fillPalDP(string& s, vector<vector<int>>& dp) {
-        
-        int n = dp.size();
+    void fillPalDP(int& n, string& s, vector<vector<int>>& dp) {
         
         for(int front = n - 1; front >= 0; --front) {
             for(int back = max(0, front - 1); back < n; ++back) {
@@ -18,11 +16,11 @@ public:
     }
     int minCut(string s) {
         int n = s.size();
+        
+        vector<vector<int>> palDP(n, vector<int>(n, 0));        
+        fillPalDP(n, s, palDP);
+        
         vector<int> dp(n + 1, 1e9);
-        vector<vector<int>> palDP(n, vector<int>(n, 0));
-        
-        fillPalDP(s, palDP);
-        
         dp[n] = 0;
         
         for(int ind = n - 1; ind >= 0; --ind) {
