@@ -11,20 +11,21 @@ public:
         }
         
         int n = arr.size();
-        vector<int> dp(n + 1);
+        vector<int> dp(2);
         sort(arr.begin(), arr.end());
         
         for(int ind = n - 1; ind >= 0; --ind) {
             
             int pick = m[arr[ind]] * arr[ind];
             if(ind == n - 1 or arr[ind + 1] != arr[ind] + 1) 
-                pick += dp[ind + 1];
+                pick += dp[0];
             else
-                pick += dp[ind + 2];
+                pick += dp[1];
 
-            int not_pick = dp[ind + 1];
+            int not_pick = dp[0];
             
-            dp[ind] = max(pick, not_pick);
+            dp[1] = dp[0];
+            dp[0] = max(pick, not_pick);
         }
         
         return dp[0];
