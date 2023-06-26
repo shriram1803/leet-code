@@ -2,8 +2,6 @@ vector<int> dp(10001, -1);
 class Solution {
 public:
     int numSquares(int n) {
-        if(n < 0)
-            return 1e9;
         if(n == 0) 
             return 0;
         
