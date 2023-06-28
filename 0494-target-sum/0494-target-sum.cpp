@@ -10,7 +10,6 @@ public:
         
         target = (sum - target) / 2;
         
-        vector<vector<int>> dp(n, vector<int>(target + 1));
         vector<int> prev(target + 1), curr(target + 1);
         
         prev[0] += 1;
