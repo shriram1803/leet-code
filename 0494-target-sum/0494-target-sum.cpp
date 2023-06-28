@@ -10,29 +10,20 @@ public:
         
         target = (sum - target) / 2;
         
-        vector<int> prev(target + 1), curr(target + 1);
+        vector<int> dp(target + 1);
         
-        prev[0] += 1;
+        dp[0] += 1;
         if(nums[0] <= target)
-            prev[nums[0]] += 1;
+            dp[nums[0]] += 1;
         for(int ind = 1; ind < n; ++ind) {
-            for(int rem = 0; rem <= target; ++rem) {
-                
-                //Not pick case
-                int res = prev[rem];
-
+            for(int rem = target; rem >= 0; --rem) {
                 //Pick Case
                 if(rem >= nums[ind]) 
-                    res += prev[rem - nums[ind]];
-
-                curr[rem] = res;
-                
+                    dp[rem] += dp[rem - nums[ind]];                
             }
-            
-            prev = curr;
         }
         
         
-        return prev[target];
+        return dp[target];
     }
 };
