@@ -9,11 +9,7 @@ public:
             for(int i = m; i >= 0; --i) {
                 for(int j = n; j >= 0; --j) {
                     
-                    int zeroes = 0;
-                    for(int k = 0; k < strs[ind - 1].size(); ++k) {
-                        if(strs[ind - 1][k] == '0')
-                            zeroes += 1;
-                    }
+                    int zeroes = count(strs[ind - 1].begin(), strs[ind - 1].end(), '0');
 
                     int pick = -1e9;
                     if(i >= zeroes and j >= (strs[ind - 1].size() - zeroes))
