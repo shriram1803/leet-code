@@ -11,20 +11,17 @@ public:
         
         int not_pick = f(ind - 1, i, j, strs, dp);
         
-        int tmpi = i, tmpj = j;
-        for(int k = 0; k < strs[ind].size(); ++k)
+        int zeroes = 0;
+        for(int k = 0; k < strs[ind].size(); ++k) {
             if(strs[ind][k] == '0')
-                i -= 1;
-            else
-                j -= 1;
+                zeroes += 1;
+        }
         
-        if(i < 0 or j < 0)
-            return not_pick;
+        int pick = -1e9;
+        if(i >= zeroes and j >= (strs[ind].size() - zeroes))
+            pick = 1 + f(ind - 1, i - zeroes, j - (strs[ind].size() - zeroes), strs, dp);
         
-        
-        int pick = 1 + f(ind - 1, i, j, strs, dp);
-        
-        return dp[ind][tmpi][tmpj] = max(not_pick, pick);
+        return dp[ind][i][j] = max(not_pick, pick);
     }
     int findMaxForm(vector<string>& strs, int m, int n) {
         int N = strs.size();
