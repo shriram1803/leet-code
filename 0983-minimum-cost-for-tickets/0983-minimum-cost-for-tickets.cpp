@@ -9,8 +9,7 @@ public:
         
         for(int ind = n - 1; ind >= 0; --ind) {
             for(int i = 0; i < 3; ++i) {
-                int k;
-                for(k = ind + 1; k < n and (days[ind] + pass[i] - 1 >= days[k]); ++k); 
+                int k = upper_bound(days.begin(), days.end(), days[ind] + pass[i] - 1) - days.begin();
                 dp[ind] = min(dp[ind], costs[i] + dp[k]);
             }
         }
