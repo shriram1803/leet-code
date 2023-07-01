@@ -9,7 +9,7 @@ public:
         
         for(int num : arr) {
             if(m.count(num - d)) {
-                m[num] = max(m[num], 1 + m[num - d]);
+                m[num] = 1 + m[num - d];
                 maxi = max(maxi, m[num]);
             } else {
                 m[num] = 1;
