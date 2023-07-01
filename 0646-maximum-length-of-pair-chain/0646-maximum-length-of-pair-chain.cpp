@@ -8,9 +8,11 @@ public:
         
         //Pure LIS Pattern
         for(int ind = 1; ind < n; ++ind) {
-            for(int k = 0; k < ind; ++k) {
-                if(pairs[ind][0] > pairs[k][1])
+            for(int k = ind - 1; k >= 0; --k) {
+                if(pairs[ind][0] > pairs[k][1]) {
                     dp[ind] = max(dp[ind], 1 + dp[k]);
+                    break;
+                }
             }
         }
         
