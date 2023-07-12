@@ -1,17 +1,21 @@
 class Solution {
 public:
     vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
-        vector<int> monotonic;
-        vector<int> res;
+        int n = obstacles.size();
+        vector<int> monotonic = {obstacles[0]};
+        vector<int> res(n);
+        res[0] = 1;
         
-        for(int obs : obstacles) {
-            if(monotonic.empty() or monotonic.back() <= obs) {
-                monotonic.emplace_back(obs);
-                res.emplace_back(monotonic.size());
+        
+        //Modified LIS Template
+        for(int i = 1; i < n; ++i) {
+            if(monotonic.back() <= obstacles[i]) {
+                monotonic.emplace_back(obstacles[i]);
+                res[i] = monotonic.size();
             } else {
-                int ind = upper_bound(monotonic.begin(), monotonic.end(), obs) - monotonic.begin();
-                res.emplace_back(ind + 1);
-                monotonic[ind] = obs;
+                int ind = upper_bound(monotonic.begin(), monotonic.end(), obstacles[i]) - monotonic.begin();
+                res[i] = ind + 1;
+                monotonic[ind] = obstacles[i];
             }
         }
         
