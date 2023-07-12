@@ -1,30 +1,37 @@
 class Solution {
 public:
-    bool dfs(vector<vector<int>>& g, vector<int>& vis, vector<int>& path, int i) {
-        if(path[i]) return true;
-        if(vis[i]) return false;
-        path[i] = 1, vis[i] = 1;
-        bool res = false;
-        for(int val : g[i]) {
-            if(dfs(g, vis, path, val)) {
-                res = true;
+    int isCycle(vector<vector<int>>& g, vector<int>& path, vector<int>& vis, vector<int>& cycleEle, int curr) {
+        if(path[curr] or cycleEle[curr])
+            return 1;
+        if(vis[curr])
+            return 0;
+        
+        vis[curr] = 1, path[curr] = 1;
+        
+        for(auto& node : g[curr]) {
+            if(isCycle(g, path, vis, cycleEle, node)) {
+                cycleEle[curr] = 1;
             }
         }
-        if(res) return true;
-        path[i] = 0;
-        return false;
+        
+        path[curr] = 0;
+        
+        return cycleEle[curr];
     }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         int n = graph.size();
-        vector<int> path(n, 0), vis(n, 0), res;
+        vector<int> vis(n), cycleEles(n), res;
         for(int i = 0; i < n; ++i) {
+            vector<int> path(n);
             if(!vis[i])
-                dfs(graph, vis, path, i);
+                isCycle(graph, path, vis, cycleEles, i);
         }
+        
         for(int i = 0; i < n; ++i) {
-            if(path[i]) continue;
-            res.emplace_back(i);
+            if(!cycleEles[i])
+                res.emplace_back(i);
         }
+        
         return res;
     }
 };
