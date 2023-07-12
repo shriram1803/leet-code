@@ -20,9 +20,8 @@ public:
     }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         int n = graph.size();
-        vector<int> vis(n), cycleEles(n), res;
+        vector<int> vis(n), path(n), cycleEles(n), res;
         for(int i = 0; i < n; ++i) {
-            vector<int> path(n);
             if(!vis[i])
                 isCycle(graph, path, vis, cycleEles, i);
         }
