@@ -1,27 +1,26 @@
 class Solution {
 public:
+    int f(int i, int j, string& word1, string& word2, vector<vector<int>>& dp) {
+        if(i < 0 and j < 0)
+            return 0;
+        if(i < 0)
+            return j + 1;
+        if(j < 0)
+            return i + 1;
+        
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+        if(word1[i] == word2[j])
+            return dp[i][j] = f(i - 1, j - 1, word1, word2, dp);
+        
+        return dp[i][j] = 1 + min({
+           f(i - 1, j - 1, word1, word2, dp), f(i, j - 1, word1, word2, dp), f(i - 1, j, word1, word2, dp)
+        });
+    }
     int minDistance(string word1, string word2) {
-        int s1 = word1.size(), s2 = word2.size();
-        
-        vector<int> prev(s2 + 1), curr(s2 + 1);
-        
-        for(int i = 0; i <= s2; ++i) prev[i] = i;
-        
-        for(int m = 1; m <= s1; ++m) {
-            curr[0] = m;
-            for(int n = 1; n <= s2; ++n) {
-                if(word1[m - 1] == word2[n - 1]) {
-                    curr[n] = prev[n - 1];
-                } else {
-                    curr[n] = 1 + min({
-                        prev[n], curr[n - 1], prev[n - 1]
-                    });
-                }
-            }
-            prev = curr;
-        }
-        
-        
-        return prev[s2];
+        int m = word1.size(), n = word2.size();
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return f(m - 1, n - 1, word1, word2, dp);
     }
 };
