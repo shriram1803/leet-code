@@ -12,28 +12,26 @@ public:
                 start = mid + 1;
             }
         }
+        
         return start;
-    }
-    int f(int ind, const int n, const int k, vector<vector<int>>& events, vector<vector<int>>& dp) {
-        if(ind == n or k == 0)
-            return 0;
-        
-        if(dp[ind][k] != -1)
-            return dp[ind][k];
-        
-        int not_pick = f(ind + 1, n, k, events, dp);
-        
-        int next_ind = _upper_bound(events, ind + 1, events[ind][1]);
-        int pick = events[ind][2] + f(next_ind, n, k - 1, events, dp);
-        
-        return dp[ind][k] = max(pick, not_pick);
     }
     int maxValue(vector<vector<int>>& events, int K) {
         int n = events.size();
         sort(events.begin(), events.end());
         
-        vector<vector<int>> dp(n, vector<int>(K + 1, -1));
+        vector<vector<int>> dp(n + 1, vector<int>(K + 1));
         
-        return f(0, n, K, events, dp);
+        for(int ind = n - 1; ind >= 0; --ind) {
+            for(int k = 1; k <= K; ++k) {
+                int not_pick = dp[ind + 1][k];
+        
+                int next_ind = _upper_bound(events, ind + 1, events[ind][1]);
+                int pick = events[ind][2] + dp[next_ind][k - 1];
+
+                dp[ind][k] = max(pick, not_pick);
+            }
+        }
+        
+        return dp[0][K];
     }
 };
