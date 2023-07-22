@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<string>> res;
-    void backtrack(vector<string>& curr, unordered_set<int>& a, unordered_set<int>& b, vector<int>& c, int n, const int N) 
+    void backtrack(vector<string>& curr, vector<int>& diag1, vector<int>& diag2, vector<int>& down, int n, const int N) 
     {
         
         if(n < 0) {
@@ -10,20 +10,22 @@ public:
         }
         
         for(int i = 0; i < N; ++i) {
-            if(a.count(n - i) or b.count(n + i) or c[i] == 1)
+            
+            if(diag1[N + (n - i)] or diag2[n + i] or down[i])
                 continue;
             
-            a.insert(n - i);
-            b.insert(n + i);
-            c[i] = 1;
+            diag1[N + (n - i)] = 1;
+            diag2[n + i] = 1;
+            down[i] = 1;
             curr[n][i] = 'Q';
             
-            backtrack(curr, a, b, c, n - 1, N);
+            backtrack(curr, diag1, diag2, down, n - 1, N);
             
-            a.erase(n - i);
-            b.erase(n + i);
-            c[i] = 0;
+            diag1[N + (n - i)] = 0;
+            diag2[n + i] = 0;
+            down[i] = 0;
             curr[n][i] = '.';
+            
         }
         
     }
@@ -34,10 +36,9 @@ public:
             init_row += '.';
         
         vector<string> init(n, init_row);
-        unordered_set<int> a, b;
-        vector<int> c(n);
+        vector<int> down(n), diag1(2 * n), diag2(2 * n + 1);
         
-        backtrack(init, a, b, c, n - 1, n);
+        backtrack(init, diag1, diag2, down, n - 1, n);
 
         return res;
     }
