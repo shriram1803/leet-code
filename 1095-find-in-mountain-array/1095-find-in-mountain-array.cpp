@@ -11,13 +11,13 @@
 class Solution {
 public:
     int peak_ind(MountainArray& arr) {
-        int left = 1, right = arr.length() - 2, mid;
+        int left = 1, right = arr.length() - 2, mid, curr, next;
         
         while(left <= right) {
             mid = left + (right - left) / 2;
             
-            int curr = arr.get(mid);
-            int next = arr.get(mid + 1);
+            curr = arr.get(mid);
+            next = arr.get(mid + 1);
             if(next < curr)
                 right = mid - 1;
             else
@@ -32,10 +32,10 @@ public:
         int res = -1;
         
         // Reverse binary search
-        int left = peak, right = mountainArr.length() - 1, mid;
+        int left = peak, right = mountainArr.length() - 1, mid, curr;
         while(left <= right) {
             mid = left + (right - left) / 2;
-            int curr = mountainArr.get(mid);
+            curr = mountainArr.get(mid);
             if(curr > target) {
                 left = mid + 1;
             } else if(curr < target) {
@@ -47,10 +47,10 @@ public:
         }
         
         // Regular binary search
-        left = 0, right = peak, mid;
+        left = 0, right = peak, mid, curr;
         while(left <= right) {
             mid = left + (right - left) / 2;
-            int curr = mountainArr.get(mid);
+            curr = mountainArr.get(mid);
             if(curr < target) {
                 left = mid + 1;
             } else if(curr > target) {
