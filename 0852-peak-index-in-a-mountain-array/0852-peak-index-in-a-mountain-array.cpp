@@ -1,10 +1,10 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
-        int left = 0, right = arr.size() - 2;
+        int left = 0, right = arr.size() - 2, mid;
         
         while(left <= right) {
-            int mid = left + (right - left) / 2;
+            mid = left + (right - left) / 2;
             if(arr[mid + 1] < arr[mid])
                 right = mid - 1;
             else
