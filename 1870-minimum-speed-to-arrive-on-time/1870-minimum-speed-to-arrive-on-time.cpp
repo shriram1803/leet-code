@@ -1,17 +1,18 @@
 class Solution {
 public:
-    bool canReachOffice(double speed, vector<int>& dist, double hour) {
+    bool canReachOffice(int& speed, vector<int>& dist, double& hour) {
         double curr = 0;
         for(int d : dist) {
-            curr = (double)ceil(curr) + d/speed;
+            curr += (double)d/speed;
             if(curr > hour) 
                 return 0;
+            curr = ceil(curr);
         }
         return 1;
     }
     int minSpeedOnTime(vector<int>& dist, double hour) {
         int left = 1;
-        int right = 1e9;
+        int right = 1e7;
         int mid;
         int ans = -1;
         
