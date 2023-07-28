@@ -1,22 +1,24 @@
 class Solution {
 public:
-    int f(int front, int back, vector<int>& nums, vector<vector<int>>& dp) {
-        if(front > back)
-            return 0;
-        
-        if(dp[front][back] != -1)
-            return dp[front][back];
-        
-        int pick_front = nums[front] - f(front + 1, back, nums, dp);
-        int pick_back = nums[back] - f(front, back - 1, nums, dp);
-        
-        return dp[front][back] = max(pick_front, pick_back);
-    }
     bool PredictTheWinner(vector<int>& nums) {
         int n = nums.size();
         
-        vector<vector<int>> dp(n, vector<int>(n, -1));
+        vector<vector<int>> dp(n, vector<int>(n));
         
-        return f(0, n - 1, nums, dp) >= 0;
+        for(int i = 0; i < n; ++i) 
+            dp[i][i] = nums[i];
+        
+        for(int front = n - 1; front >= 0; --front) {
+            for(int back = front + 1; back < n; ++back) {
+                
+                int pick_front = nums[front] - dp[front + 1][back];
+                int pick_back = nums[back] - dp[front][back - 1];
+        
+                dp[front][back] = max(pick_front, pick_back);
+                
+            }
+        }
+        
+        return dp[0][n - 1] >= 0;
     }
 };
