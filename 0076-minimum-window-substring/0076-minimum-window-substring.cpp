@@ -8,8 +8,6 @@ public:
     }
     string minWindow(string s, string t) {
         
-        s += 'a'; //dummy
-        
         int m = s.size();
         int mini = 1e9;
         int res_start = 0;
@@ -23,22 +21,25 @@ public:
         }
         
         int matched = 0;
+        int vali, valj;
         for(int i = 0, j = 0; i < m; ++i) {
-            int val = charToInt(s[i]);
+            
+            vali = charToInt(s[i]);  
+            freqs[vali] += 1;
+            if(freqs[vali] == freqt[vali])
+                matched += 1;  
+            
             while(j <= i and matched == uniq) {
-                int valj = charToInt(s[j]);
-                if(i - j < mini) {
-                    mini = i - j;
+                valj = charToInt(s[j]);
+                if(i - j + 1 < mini) {
+                    mini = i - j + 1;
                     res_start = j;
                 }
                 freqs[valj] -= 1;
                 if(freqs[valj] < freqt[valj])
                     matched -= 1;
                 j += 1;
-            }
-            freqs[val] += 1;
-            if(freqs[val] == freqt[val])
-                matched += 1;                                        
+            }                                      
         }
         
         if(mini == 1e9)
