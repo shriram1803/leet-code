@@ -1,21 +1,29 @@
 class Solution {
 public:
-    vector<string> res;
     vector<string> bank{
         "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
     };
-    void solve(string digits, int ind, string current, const int n) {
+    void backtrack(int ind, const int n, string& curr, string& digits, vector<string>& res) {
+        
         if(ind == n) {
-            if(current.size()) res.push_back(current);
+            if(!curr.empty())
+                res.emplace_back(curr);
             return;
         }
-        int val = digits[ind] - '2';
-        for(auto ch : bank[val]) {
-            solve(digits, ind + 1, current + ch, n);
+        
+        for(auto& ch : bank[digits[ind] - '2']) {
+            curr.push_back(ch);
+            backtrack(ind + 1, n, curr, digits, res);
+            curr.pop_back();
         }
+        
     }
     vector<string> letterCombinations(string digits) {
-        solve(digits, 0, "", digits.size());
+        vector<string> res;
+        
+        string curr = "";
+        backtrack(0, digits.size(), curr, digits, res);
+        
         return res;
     }
 };
