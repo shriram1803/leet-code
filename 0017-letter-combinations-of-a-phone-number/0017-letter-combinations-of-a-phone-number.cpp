@@ -6,23 +6,27 @@ public:
     void backtrack(int ind, const int n, string& curr, string& digits, vector<string>& res) {
         
         if(ind == n) {
-            if(!curr.empty())
-                res.emplace_back(curr);
+            res.emplace_back(curr);
             return;
         }
         
         for(auto& ch : bank[digits[ind] - '2']) {
-            curr.push_back(ch);
+            curr[ind] = ch;
             backtrack(ind + 1, n, curr, digits, res);
-            curr.pop_back();
         }
         
     }
     vector<string> letterCombinations(string digits) {
+        int n = digits.size();
+        if(n == 0)
+            return {};
+        
         vector<string> res;
         
         string curr = "";
-        backtrack(0, digits.size(), curr, digits, res);
+        curr.append(n, '?');
+        
+        backtrack(0, n, curr, digits, res);
         
         return res;
     }
