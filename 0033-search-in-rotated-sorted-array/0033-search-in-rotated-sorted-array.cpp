@@ -1,25 +1,29 @@
 class Solution {
 public:
-    int bs(int left, int right, vector<int>& nums, int targ) {
-        if(left > right)
-            return -1;
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        int mid;
         
-        int mid = left + (right - left) / 2;
-        
-        if(nums[mid] == targ)
-            return mid;
-        
-        if(nums[left] < targ and targ < nums[right]) {
-            if(nums[mid] < targ)
-                return bs(mid + 1, right, nums, targ);
-            else
-                return bs(left, mid - 1, nums, targ);
+        while(left <= right) {
+            mid = left + (right - left) / 2;
+            
+            if(nums[mid] == target)
+                return mid;
+            
+            if(nums[mid] < nums[right]) {
+                if(nums[mid] <= target and target <= nums[right])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            } else {
+                if(nums[left] <= target and target <= nums[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
         }
         
-        return max(bs(left, mid - 1, nums, targ), bs(mid + 1, right, nums, targ));        
-    }
-    int search(vector<int>& nums, int target) {
         
-        return bs(0, nums.size() - 1, nums, target);
+        return -1;
     }
 };
