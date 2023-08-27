@@ -7,9 +7,9 @@ public:
         if(dp[ind][prev] != -1)
             return dp[ind][prev];
         
-        long long prev_jump = stones[ind] - stones[prev];
+        int prev_jump = stones[ind] - stones[prev];
         
-        long long max_reach = stones[ind] + prev_jump + 1; 
+        int max_reach = stones[ind] + prev_jump + 1; 
         
         for(int j = ind + 1; j < n and stones[j] <= max_reach; ++j) {
             
