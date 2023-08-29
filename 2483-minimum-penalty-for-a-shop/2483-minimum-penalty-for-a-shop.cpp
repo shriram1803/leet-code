@@ -1,25 +1,29 @@
 class Solution {
 public:
     int bestClosingTime(string customers) {
+        int n = customers.size();
         
-        const int n = customers.size();
+        vector<int> open(n + 1), close(n + 1);
         
-        int res = n, least_pen = 0, pen = 0;
-        
-        for(auto ch : customers) {
-            if(ch == 'N') pen++;
+        int prev = customers[0] == 'N';
+        for(int i = 1; i <= n; ++i) {
+            open[i] = prev;
+            prev += customers[i] == 'N';
         }
-        least_pen = pen;
         
         for(int i = n - 1; i >= 0; --i) {
-            if(customers[i] == 'Y') pen++;
-            else pen--;
-            if(pen <= least_pen) {
-                res = i;
-                least_pen = pen;
+            close[i] += close[i + 1] + (customers[i] == 'Y');
+        }
+        
+        int min_res = n;
+        int mini = 1e9;
+        for(int i = n; i >= 0; --i) {
+            if(open[i] + close[i] <= mini) {
+                mini = open[i] + close[i];
+                min_res = i;
             }
         }
         
-        return res;
+        return min_res;
     }
 };
