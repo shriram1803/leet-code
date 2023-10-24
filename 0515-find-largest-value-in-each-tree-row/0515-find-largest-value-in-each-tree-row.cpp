@@ -11,23 +11,39 @@
  */
 class Solution {
 public:
-    map<int, int> m;
-    void dfs(TreeNode* root, int level) {
-        if(!root)
-            return;
-        if(m.count(level))
-            m[level] = max(m[level], root->val);
-        else
-            m[level] = root->val;
-        dfs(root->left, level + 1);
-        dfs(root->right, level + 1);
-    }
     vector<int> largestValues(TreeNode* root) {
-        dfs(root, -1);
+        if(!root)
+            return {};
+        
+        int cur_max;
+        int sz;
+        TreeNode* curr;
         vector<int> res;
-        for(auto& it : m) {
-            res.emplace_back(it.second);
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        
+        while(!q.empty()) {
+            cur_max = INT_MIN;
+            sz = q.size();
+            
+            while(sz--) {
+                curr = q.front();
+                q.pop();
+                
+                if(curr->left)
+                    q.push(curr->left);
+                
+                if(curr->right)
+                    q.push(curr->right);
+                
+                cur_max = max(cur_max, curr->val);
+            }
+            
+            res.emplace_back(cur_max);
         }
+        
         return res;
     }
 };
