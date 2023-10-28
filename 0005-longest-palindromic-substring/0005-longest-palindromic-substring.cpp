@@ -1,30 +1,33 @@
 class Solution {
 public:
-    bool isPal(string& s, int j, int i) {
-        bool res = true;
-        while(res and i < j) {
-            if(s[i] != s[j]) 
-                res = false;
-            ++i;
-            --j;
-        }
-        return res;
-    }
-    string longestPalindrome(string s) {
-        string res = "";
-        int max_res = 1;
-        int n = s.size();
-        res += s[0];
-        
-        for(int i = 0; i < n; ++i) {
-            for(int j = i; j < n; ++j) {
-                if(j - i + 1 > max_res && isPal(s, j, i)) {
-                    max_res = j - i + 1;
-                    res = s.substr(i, j - i + 1);
+    void traverse(string& s, int left, int right, int& max_res, int& max_start, int n) {
+        while(left >= 0 and right < n) {
+            if(s[left] == s[right]) {
+                if(right - left + 1 > max_res) {
+                    max_res = right - left + 1;
+                    max_start = left;
                 }
+                --left;
+                ++right;
+            } else {
+                break;
             }
         }
+    }
+    string longestPalindrome(string s) {
+        int max_res = 1;
+        int max_start = 0;
+        int n = s.size();
         
-        return res;
+        for(int i = 1; i < n; ++i) {
+            int left = i - 1, right = i + 1;
+            traverse(s, left, right, max_res, max_start, n);
+            if(s[i] != s[i - 1])
+                continue;
+            left = i - 1, right = i;
+            traverse(s, left, right, max_res, max_start, n);            
+        }
+        
+        return s.substr(max_start, max_res);
     }
 };
