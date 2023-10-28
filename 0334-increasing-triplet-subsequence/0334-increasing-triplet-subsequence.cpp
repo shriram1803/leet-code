@@ -1,22 +1,19 @@
 class Solution {
 public:
     bool increasingTriplet(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> left(n, 0), right(n, 0);
-        int lft = INT_MAX;
-        int rht = INT_MIN;
-        for(int i = 0; i < n; ++i) {
-            left[i] = lft;
-            lft = min(lft, nums[i]);
+        vector<int> mono;
+        int ind;
+        // LIS Algorithm
+        for(int num : nums) {
+            if(mono.empty() or mono.back() < num) {
+                mono.emplace_back(num);
+                if(mono.size() == 3)
+                    return 1;
+                continue;
+            }
+            ind = lower_bound(mono.begin(), mono.end(), num) - mono.begin();
+            mono[ind] = num;
         }
-        for(int i = n - 1; i >= 0; --i) {
-            right[i] = rht;
-            rht = max(rht, nums[i]);
-        }
-        for(int i = 0; i < n; ++i) {
-            if(left[i] < nums[i] and nums[i] < right[i])
-                return true;
-        }
-        return false;
+        return 0;
     }
 };
