@@ -1,15 +1,18 @@
 class Solution {
 public:
-    int vowels[26] = {1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1};
+    unordered_set<char> vowels{'a', 'e', 'i', 'o', 'u'};
     int maxVowels(string s, int k) {
-        int vow_cnt = 0;
-        int max_vow_cnt = 0;
+        int curr = 0;
+        int res = 0;
+        
         for(int i = 0; i < s.size(); ++i) {
+            if(vowels.count(s[i]))
+                ++curr;
             if(i >= k)
-                vow_cnt -= vowels[s[i - k] - 'a'];
-            vow_cnt += vowels[s[i] - 'a'];
-            max_vow_cnt = max(max_vow_cnt, vow_cnt);
+                curr -= vowels.count(s[i - k]);
+            res = max(res, curr);
         }
-        return max_vow_cnt;
+        
+        return res;
     }
 };
