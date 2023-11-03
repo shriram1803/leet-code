@@ -11,36 +11,18 @@
  */
 class Solution {
 public:
-    void fillStack(TreeNode* root, stack<int> &s)
-    {
-        if(!root){
+    void inorder(TreeNode* root, vector<int>& v) {
+        if(!root)
             return;
-        }
-        if(!root->left and !root->right){
-            s.push(root->val);
-            return;
-        }
-        fillStack(root->left, s);
-        fillStack(root->right, s);
-    }
-    bool checkStack(TreeNode* root, stack<int> &s)
-    {
-        if(!root){
-            return true;
-        }
-        if(!root->left and !root->right){
-            if(!s.empty() and s.top() == root->val) {
-                s.pop();
-                return true;
-            }
-            return false;
-        }
-        return checkStack(root->right, s) and checkStack(root->left, s);
+        if(!root->left and !root->right)
+            v.emplace_back(root->val);
+        inorder(root->left, v);
+        inorder(root->right, v);
     }
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        stack<int> s;
-        fillStack(root1, s);
-        if(checkStack(root2, s) and !s.size()) return true;
-        return false;
+        vector<int> v1, v2;
+        inorder(root1, v1);
+        inorder(root2, v2);
+        return v1 == v2;
     }
 };
