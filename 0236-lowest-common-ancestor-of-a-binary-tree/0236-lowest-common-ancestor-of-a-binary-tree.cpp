@@ -16,10 +16,8 @@ public:
         auto left = dfs(root->left, p, q);
         auto right = dfs(root->right, p, q);
 
-        bool curr = root == p || root == q;
-        
-        if(curr or (curr and left) or (curr and right) or (left and right))
-            return root;
+        if(root == p || root == q || (left && right)) 
+            return root;   
         
         if(left)
             return left;
