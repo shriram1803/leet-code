@@ -9,35 +9,27 @@
  */
 class Solution {
 public:
-    pair<TreeNode*, int> dfs(TreeNode* root, TreeNode* p, TreeNode* q) {
+    TreeNode* dfs(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(!root)
-            return {nullptr, 0}; 
-        
-        int local = 0;
-        
-        if(root == p) 
-            local += 1;
-        
-        if(root == q)
-            local += 1;
+            return nullptr;
         
         auto left = dfs(root->left, p, q);
         auto right = dfs(root->right, p, q);
-     
-        local += left.second + right.second;
+
+        bool curr = root == p || root == q;
         
-        if(local == 2)
-            return {root, 0};
+        if(curr or (curr and left) or (curr and right) or (left and right))
+            return root;
         
-        if(left.first)
-            return {left.first, 0};
+        if(left)
+            return left;
         
-        if(right.first)
-            return {right.first, 0};        
+        if(right)
+            return right;
         
-        return {nullptr, local};
+        return nullptr;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return dfs(root, p, q).first;
+        return dfs(root, p, q);
     }
 };
