@@ -1,23 +1,23 @@
 class SmallestInfiniteSet {
 public:
-    set<int> s;
-    int n;
+    int smallest;
+    unordered_set<int> removed;
     SmallestInfiniteSet() {
-        n = 1;
+        smallest = 1;
     }
     
     int popSmallest() {
-        if(!s.empty()) {
-            int ret = *s.begin();
-            s.erase(ret);
-            return ret;
-        }
-        return n++;
+        removed.insert(smallest);
+        int save = smallest;
+        while(removed.count(++smallest));
+        return save;
     }
     
     void addBack(int num) {
-        if(num < n)
-            s.insert(num);
+        if(removed.count(num)) {
+            removed.erase(num);
+            smallest = min(smallest, num);
+        }
     }
 };
 
