@@ -1,16 +1,22 @@
 class StockSpanner {
 public:
+    stack<pair<int, int>> s;
+    int current_day = 0;
     StockSpanner() {
         
     }
-    stack<pair<int, int>> s;
+    
     int next(int price) {
-        int cnt = 1;
-        while(!s.empty() and s.top().first <= price){
-            cnt += s.top().second, s.pop();
-        }
-        s.push({price, cnt});
-        return cnt;
+        int res = 1;
+        current_day += 1;
+        while(!s.empty() and s.top().first <= price)
+            s.pop();
+        if(!s.empty())
+            res = current_day - s.top().second;
+        else
+            res = current_day;
+        s.push({price, current_day});
+        return res;
     }
 };
 
