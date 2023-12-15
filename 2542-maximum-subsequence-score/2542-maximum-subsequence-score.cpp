@@ -2,23 +2,27 @@ class Solution {
 public:
     long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
         int n = nums1.size();
-        priority_queue<pair<int, int>> pq;
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> picked;
+        vector<pair<int, int>> v(n);
+        priority_queue<int, vector<int>, greater<int>> picked;
         long long su = 0;
         long long res = -1;
         
         for(int i = 0; i < n; ++i) {
-            pq.push({nums1[i], nums2[i]});
-        }        
+            v[i] = {nums2[i], nums1[i]};
+        }
+        sort(v.rbegin(), v.rend());
         
-        while(!pq.empty()) {
-            su += pq.top().first;
-            picked.push({pq.top().second, pq.top().first});
-            pq.pop();
-            if(picked.size() == k) {
-                res = max(res, su * picked.top().first);
-                su -= picked.top().second;
+        for(int i = 0; i < n; ++i) {
+            su += v[i].second;
+            picked.push(v[i].second);
+            
+            if(picked.size() > k) {
+                su -= picked.top();
                 picked.pop();
+            }
+            
+            if(picked.size() == k) {
+                res = max(res, su * v[i].first);
             }
         }
         
